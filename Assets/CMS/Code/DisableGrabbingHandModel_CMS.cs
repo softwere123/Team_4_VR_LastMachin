@@ -8,7 +8,7 @@ using UnityEngine.XR.Interaction.Toolkit; //xr인터랙션툴킷을 사용하기위한 네임스
 //네러티브 요소를 더욱 자연스럽게 느끼게 하기위한 스크립트
 
 //23번부터 47번에서 바꾸기만 하면 또 다른 구현력을 가진 무궁무진한 코드다
-public class DisableGrabbingHandModel : MonoBehaviour
+public class DisableGrabbingHandModel_CMS : MonoBehaviour
 {
 
     public GameObject leftHandModel; //왼손모델 그릇
