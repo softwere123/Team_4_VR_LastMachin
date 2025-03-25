@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events; // 콜라이드 함수를 불러오기 위해 이벤트 전역 변수를 사용한다.
-public class TriggerZone : MonoBehaviour
+public class TriggerZone_CMS : MonoBehaviour
 {
     public string targetTag; // 타겟 태그 이름을 설정한다.
     public UnityEvent<GameObject> OnEnterEvent; // 콜라이드 함수를 불러오기 위한 이벤트 전역 변수에서 게임오브젝트 이밴트 타입을 가져와 onEnterEvent에 넣는다
