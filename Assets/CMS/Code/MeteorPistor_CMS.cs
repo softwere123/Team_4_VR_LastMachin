@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit; //XR 인터랙션 툴킷을 가져온다
-using AutoHand;
+//using AutoHand;
 // 코드 알고리즘 세줄 요약:
 // 이 코드는 Braekable와 상호작용하는 클래스로 
 // MeteorPistor_CMS에서 발사되는 레이저가 부딪히는 특정 오브젝트를 찾아서 Break 메소드를 전송한다.
