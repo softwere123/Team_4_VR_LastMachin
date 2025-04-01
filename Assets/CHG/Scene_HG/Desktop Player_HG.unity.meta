@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5fb57b5e0df4e2643a72bbf227a9f248
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 165323
+  packageName: Auto Hand - VR Interaction
+  packageVersion: 4.0.0
+  assetPath: Assets/AutoHand/Examples/Scenes/Desktop/Desktop Player.unity
+  uploadId: 672110
