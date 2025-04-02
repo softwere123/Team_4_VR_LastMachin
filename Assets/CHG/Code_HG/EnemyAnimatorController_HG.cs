@@ -3,49 +3,49 @@ using UnityEngine.AI;
 
 public class EnemyAnimatorController : MonoBehaviour
 {
-    public Transform player; // ÇÃ·¹ÀÌ¾îÀÇ Transform
-    public float chaseRange = 10.0f; // ÇÃ·¹ÀÌ¾î¸¦ ÃßÀûÇÒ ¹üÀ§
-    public float stoppingDistance = 2.0f; // ÇÃ·¹ÀÌ¾î¿Í ¸ØÃß´Â °Å¸®
-    public Animator animator; // ÀûÀÇ Animator
-    private NavMeshAgent agent; // NavMeshAgent¸¦ ÅëÇÑ ÀÌµ¿ Á¦¾î
+    public Transform player; // í”Œë ˆì´ì–´ì˜ Transform
+    public float chaseRange = 10.0f; // í”Œë ˆì´ì–´ë¥¼ ì¶”ì í•  ë²”ìœ„
+    public float stoppingDistance = 2.0f; // í”Œë ˆì´ì–´ì™€ ë©ˆì¶”ëŠ” ê±°ë¦¬
+    public Animator animator; // ì ì˜ Animator
+    private NavMeshAgent agent; // NavMeshAgentë¥¼ í†µí•œ ì´ë™ ì œì–´
 
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>(); // NavMeshAgent ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
+        agent = GetComponent<NavMeshAgent>(); // NavMeshAgent ì»´í¬ë„ŒíŠ¸ ê°€ì ¸ì˜¤ê¸°
     }
 
     void Update()
     {
-        // ÇÃ·¹ÀÌ¾î¿ÍÀÇ °Å¸® °è»ê
+        // í”Œë ˆì´ì–´ì™€ì˜ ê±°ë¦¬ ê³„ì‚°
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        // ÇÃ·¹ÀÌ¾î ¹ß°ß ½Ã (ÃßÀû ¹üÀ§ ¾È¿¡ ÀÖÀ½)
+        // í”Œë ˆì´ì–´ ë°œê²¬ ì‹œ (ì¶”ì  ë²”ìœ„ ì•ˆì— ìˆìŒ)
         if (distanceToPlayer < chaseRange)
         {
-            // ÇÃ·¹ÀÌ¾î¸¦ µû¶ó°¨
+            // í”Œë ˆì´ì–´ë¥¼ ë”°ë¼ê°
             agent.SetDestination(player.position);
 
-            // °È±â ¾Ö´Ï¸ŞÀÌ¼Ç È°¼ºÈ­
+            // ê±·ê¸° ì• ë‹ˆë©”ì´ì…˜ í™œì„±í™”
             if (distanceToPlayer > stoppingDistance)
             {
-                animator.SetBool("IsWalking", true); // °È±â ¾Ö´Ï¸ŞÀÌ¼Ç ½ÃÀÛ
-                animator.SetBool("SeePlayer", true); // ÇÃ·¹ÀÌ¾î¸¦ ¹ß°ß
+                animator.SetBool("IsWalking", true); // ê±·ê¸° ì• ë‹ˆë©”ì´ì…˜ ì‹œì‘
+                animator.SetBool("SeePlayer", true); // í”Œë ˆì´ì–´ë¥¼ ë°œê²¬
             }
             else
             {
-                // ÇÃ·¹ÀÌ¾î¿Í °¡±î¿ì¸é ¸ØÃã
-                animator.SetBool("IsWalking", false); // °È±â ¸ØÃã
+                // í”Œë ˆì´ì–´ì™€ ê°€ê¹Œìš°ë©´ ë©ˆì¶¤
+                animator.SetBool("IsWalking", false); // ê±·ê¸° ë©ˆì¶¤
             }
         }
         else
         {
-            // ÇÃ·¹ÀÌ¾î¸¦ ³õÃÆÀ» ¶§
+            // í”Œë ˆì´ì–´ë¥¼ ë†“ì³¤ì„ ë•Œ
             animator.SetBool("SeePlayer", false);
             animator.SetBool("IsWalking", false);
-            agent.ResetPath(); // ÀÌµ¿ ÁßÁö
+            agent.ResetPath(); // ì´ë™ ì¤‘ì§€
         }
 
-        // ÇÃ·¹ÀÌ¾î¸¦ ÇâÇØ È¸Àü
+        // í”Œë ˆì´ì–´ë¥¼ í–¥í•´ íšŒì „
         if (distanceToPlayer <= chaseRange)
         {
             Vector3 directionToPlayer = (player.position - transform.position).normalized;

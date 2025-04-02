@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 20f; // ÃÑ¾Ë ¼Óµµ
-    public int damage = 10; // °ø°İ·Â
-    public float lifetime = 3f; // ÃÑ¾ËÀÇ ¼ö¸í
+    public float speed = 20f; // ì´ì•Œ ì†ë„
+    public int damage = 10; // ê³µê²©ë ¥
+    public float lifetime = 3f; // ì´ì•Œì˜ ìˆ˜ëª…
 
     private Rigidbody rb; // Rigidbody
 
@@ -12,29 +12,29 @@ public class Bullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        // ÃÑ¾ËÀ» ¹ß»ç ¹æÇâÀ¸·Î ÀÌµ¿
+        // ì´ì•Œì„ ë°œì‚¬ ë°©í–¥ìœ¼ë¡œ ì´ë™
         rb.velocity = transform.forward * speed;
 
-        // ÃÑ¾Ë ¼ö¸í Á¦ÇÑ
+        // ì´ì•Œ ìˆ˜ëª… ì œí•œ
         Destroy(gameObject, lifetime);
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        // ÇÃ·¹ÀÌ¾î¿Í Ãæµ¹Çß´ÂÁö °Ë»ç
+        // í”Œë ˆì´ì–´ì™€ ì¶©ëŒí–ˆëŠ”ì§€ ê²€ì‚¬
         if (collision.gameObject.CompareTag("Player"))
         {
-            // ÇÃ·¹ÀÌ¾îÀÇ PlayerHealth ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿À±â
+            // í”Œë ˆì´ì–´ì˜ PlayerHealth ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜¤ê¸°
             PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                // ÇÃ·¹ÀÌ¾î Ã¼·ÂÀ» °¨¼Ò½ÃÅ´
+                // í”Œë ˆì´ì–´ ì²´ë ¥ì„ ê°ì†Œì‹œí‚´
                 playerHealth.TakeDamage(damage);
-                Debug.Log("[Bullet] ÇÃ·¹ÀÌ¾î°¡ ÃÑ¿¡ ¸ÂÀ½! ÇöÀç Ã¼·Â: " + playerHealth.GetCurrentHealth());
+                Debug.Log("[Bullet] í”Œë ˆì´ì–´ê°€ ì´ì— ë§ìŒ! í˜„ì¬ ì²´ë ¥: " + playerHealth.GetCurrentHealth());
             }
         }
 
-        // Ãæµ¹ ÈÄ ÃÑ¾Ë Á¦°Å
+        // ì¶©ëŒ í›„ ì´ì•Œ ì œê±°
         Destroy(gameObject);
     }
 }

@@ -1,39 +1,39 @@
 using UnityEngine;
-using UnityEngine.AI; // NavMesh¸¦ »ç¿ëÇÒ °æ¿ì ÇÊ¿ä
-using System.Collections; // IEnumerator¸¦ »ç¿ëÇÏ·Á¸é ÇÊ¿ä!
+using UnityEngine.AI; // NavMeshë¥¼ ì‚¬ìš©í•  ê²½ìš° í•„ìš”
+using System.Collections; // IEnumeratorë¥¼ ì‚¬ìš©í•˜ë ¤ë©´ í•„ìš”!
 
 public class EnemyShooting_HG : MonoBehaviour
 {
-    public Transform player; // ÇÃ·¹ÀÌ¾î À§Ä¡
-    public float detectionRange = 15.0f; // ÀûÀÌ ÇÃ·¹ÀÌ¾î¸¦ °¨ÁöÇÒ °Å¸®
-    public float fireRange = 10.0f; // ¹ß»ç°¡ °¡´ÉÇÑ °Å¸®
-    public float cooldownTime = 1.0f; // ¹ß»ç °£°İ (½Ã°£ °£°İ)
-    public int ammoCount = 5; // ÃÑ¾Ë ¼ö
-    public float reloadTime = 2.0f; // ÀçÀåÀü ½Ã°£
+    public Transform player; // í”Œë ˆì´ì–´ ìœ„ì¹˜
+    public float detectionRange = 15.0f; // ì ì´ í”Œë ˆì´ì–´ë¥¼ ê°ì§€í•  ê±°ë¦¬
+    public float fireRange = 10.0f; // ë°œì‚¬ê°€ ê°€ëŠ¥í•œ ê±°ë¦¬
+    public float cooldownTime = 1.0f; // ë°œì‚¬ ê°„ê²© (ì‹œê°„ ê°„ê²©)
+    public int ammoCount = 5; // ì´ì•Œ ìˆ˜
+    public float reloadTime = 2.0f; // ì¬ì¥ì „ ì‹œê°„
 
-    private float lastFireTime; // ¸¶Áö¸· ¹ß»ç ½Ã°£
-    private bool isReloading = false; // ÀçÀåÀü »óÅÂ ¿©ºÎ
+    private float lastFireTime; // ë§ˆì§€ë§‰ ë°œì‚¬ ì‹œê°„
+    private bool isReloading = false; // ì¬ì¥ì „ ìƒíƒœ ì—¬ë¶€
 
-    public Animator animator; // Animator ÄÁÆ®·Ñ·¯
-    public Transform firePoint; // ÃÑ¾ËÀÌ ¹ß»çµÉ ½ÃÀÛ À§Ä¡
-    public GameObject bulletPrefab; // ÃÑ¾Ë ÇÁ¸®ÆÕ
-    public ParticleSystem muzzleFlash; // ÃÑ±¸ ÆÄÆ¼Å¬ (¿É¼Ç)
+    public Animator animator; // Animator ì»¨íŠ¸ë¡¤ëŸ¬
+    public Transform firePoint; // ì´ì•Œì´ ë°œì‚¬ë  ì‹œì‘ ìœ„ì¹˜
+    public GameObject bulletPrefab; // ì´ì•Œ í”„ë¦¬íŒ¹
+    public ParticleSystem muzzleFlash; // ì´êµ¬ íŒŒí‹°í´ (ì˜µì…˜)
 
     void Update()
     {
-        if (isReloading) return; // ÀçÀåÀü Áß¿¡´Â ¾Æ¹« µ¿ÀÛµµ ÇÏÁö ¾ÊÀ½
+        if (isReloading) return; // ì¬ì¥ì „ ì¤‘ì—ëŠ” ì•„ë¬´ ë™ì‘ë„ í•˜ì§€ ì•ŠìŒ
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        // ÇÃ·¹ÀÌ¾î°¡ °¨Áö ¹üÀ§ ¾È¿¡ ÀÖÀ» ¶§
+        // í”Œë ˆì´ì–´ê°€ ê°ì§€ ë²”ìœ„ ì•ˆì— ìˆì„ ë•Œ
         if (distanceToPlayer <= detectionRange)
         {
-            // ÇÃ·¹ÀÌ¾î¸¦ ÇâÇØ È¸Àü
+            // í”Œë ˆì´ì–´ë¥¼ í–¥í•´ íšŒì „
             Vector3 directionToPlayer = (player.position - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0f, directionToPlayer.z));
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
 
-            // ÇÃ·¹ÀÌ¾î°¡ ¹ß»ç °Å¸® ³»¿¡ ÀÖÀ» ¶§ ÃÑ ½î±â
+            // í”Œë ˆì´ì–´ê°€ ë°œì‚¬ ê±°ë¦¬ ë‚´ì— ìˆì„ ë•Œ ì´ ì˜ê¸°
             if (distanceToPlayer <= fireRange && Time.time > lastFireTime + cooldownTime)
             {
                 if (ammoCount > 0)
@@ -44,32 +44,32 @@ public class EnemyShooting_HG : MonoBehaviour
                 }
                 else
                 {
-                    StartCoroutine(Reload()); // ÀçÀåÀü ÄÚ·çÆ¾ È£Ãâ
+                    StartCoroutine(Reload()); // ì¬ì¥ì „ ì½”ë£¨í‹´ í˜¸ì¶œ
                 }
             }
 
-            // ¾Ö´Ï¸ŞÀÌÅÍ SeePlayer È°¼ºÈ­
+            // ì• ë‹ˆë©”ì´í„° SeePlayer í™œì„±í™”
             animator.SetBool("SeePlayer", true);
         }
         else
         {
-            // ÇÃ·¹ÀÌ¾î¸¦ °¨ÁöÇÏÁö ¸øÇÒ ¶§
+            // í”Œë ˆì´ì–´ë¥¼ ê°ì§€í•˜ì§€ ëª»í•  ë•Œ
             animator.SetBool("SeePlayer", false);
         }
     }
 
     void Shoot()
     {
-        // ¾Ö´Ï¸ŞÀÌ¼Ç Æ®¸®°Å È°¼ºÈ­
+        // ì• ë‹ˆë©”ì´ì…˜ íŠ¸ë¦¬ê±° í™œì„±í™”
         animator.SetTrigger("Shoot");
 
-        // ÃÑ±¸ ÆÄÆ¼Å¬ ½ÇÇà
+        // ì´êµ¬ íŒŒí‹°í´ ì‹¤í–‰
         if (muzzleFlash != null)
         {
             muzzleFlash.Play();
         }
 
-        // ÃÑ¾Ë »ı¼º ¹× ¹ß»ç
+        // ì´ì•Œ ìƒì„± ë° ë°œì‚¬
         if (bulletPrefab != null)
         {
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
@@ -80,11 +80,11 @@ public class EnemyShooting_HG : MonoBehaviour
     IEnumerator Reload()
     {
         isReloading = true;
-        animator.SetTrigger("Reload"); // ÀçÀåÀü ¾Ö´Ï¸ŞÀÌ¼Ç È£Ãâ
+        animator.SetTrigger("Reload"); // ì¬ì¥ì „ ì• ë‹ˆë©”ì´ì…˜ í˜¸ì¶œ
 
-        yield return new WaitForSeconds(reloadTime); // ÀçÀåÀü ½Ã°£ µ¿¾È ´ë±â
+        yield return new WaitForSeconds(reloadTime); // ì¬ì¥ì „ ì‹œê°„ ë™ì•ˆ ëŒ€ê¸°
 
-        ammoCount = 5; // ÃÑ¾Ë ÃæÀü
+        ammoCount = 5; // ì´ì•Œ ì¶©ì „
         isReloading = false;
     }
 }

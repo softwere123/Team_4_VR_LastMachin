@@ -1,37 +1,37 @@
 using UnityEngine;
-using UnityEngine.AI; // NavMeshAgent¸¦ »ç¿ëÇÏ±â À§ÇØ ÇÊ¿ä
+using UnityEngine.AI; // NavMeshAgentë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ í•„ìš”
 
 public class EnemyAI : MonoBehaviour
 {
-    public Transform player; // ÇÃ·¹ÀÌ¾îÀÇ Transform
-    public float speed = 3.5f; // ÀûÀÇ ÀÌµ¿ ¼Óµµ
-    public float stoppingDistance = 2.0f; // ÇÃ·¹ÀÌ¾î¿ÍÀÇ ÃÖ¼Ò °Å¸®
+    public Transform player; // í”Œë ˆì´ì–´ì˜ Transform
+    public float speed = 3.5f; // ì ì˜ ì´ë™ ì†ë„
+    public float stoppingDistance = 2.0f; // í”Œë ˆì´ì–´ì™€ì˜ ìµœì†Œ ê±°ë¦¬
 
-    private NavMeshAgent agent; // ÀûÀÇ NavMesh ¿¡ÀÌÀüÆ®
+    private NavMeshAgent agent; // ì ì˜ NavMesh ì—ì´ì „íŠ¸
 
     void Start()
     {
-        // NavMeshAgent ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
+        // NavMeshAgent ì»´í¬ë„ŒíŠ¸ ê°€ì ¸ì˜¤ê¸°
         agent = GetComponent<NavMeshAgent>();
-        agent.speed = speed; // NavMeshAgentÀÇ ÀÌµ¿ ¼Óµµ ¼³Á¤
+        agent.speed = speed; // NavMeshAgentì˜ ì´ë™ ì†ë„ ì„¤ì •
     }
 
     void Update()
     {
-        // ÇÃ·¹ÀÌ¾î¿ÍÀÇ °Å¸® °è»ê
+        // í”Œë ˆì´ì–´ì™€ì˜ ê±°ë¦¬ ê³„ì‚°
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        // ÇÃ·¹ÀÌ¾î°¡ stoppingDistanceº¸´Ù ¸Ö¸® ÀÖÀ¸¸é ÃßÀû
+        // í”Œë ˆì´ì–´ê°€ stoppingDistanceë³´ë‹¤ ë©€ë¦¬ ìˆìœ¼ë©´ ì¶”ì 
         if (distanceToPlayer > stoppingDistance)
         {
             agent.SetDestination(player.position);
         }
         else
         {
-            agent.ResetPath(); // ¸ØÃß±â
+            agent.ResetPath(); // ë©ˆì¶”ê¸°
         }
 
-        // ÇÃ·¹ÀÌ¾î¸¦ Ç×»ó ¹Ù¶óº¸±â
+        // í”Œë ˆì´ì–´ë¥¼ í•­ìƒ ë°”ë¼ë³´ê¸°
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0, directionToPlayer.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);

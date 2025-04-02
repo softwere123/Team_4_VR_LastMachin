@@ -3,15 +3,15 @@ using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
-    public string nextSceneName; // ÀÌµ¿ÇÒ ¾À ÀÌ¸§
-    public Vector3 spawnPosition; // ½ºÆùµÉ À§Ä¡
-    private bool isPlayerInTrigger = false; // ÇÃ·¹ÀÌ¾î°¡ ¹üÀ§ ¾È¿¡ ÀÖ´ÂÁö È®ÀÎ
+    public string nextSceneName; // ì´ë™í•  ì”¬ ì´ë¦„
+    public Vector3 spawnPosition; // ìŠ¤í°ë  ìœ„ì¹˜
+    private bool isPlayerInTrigger = false; // í”Œë ˆì´ì–´ê°€ ë²”ìœ„ ì•ˆì— ìˆëŠ”ì§€ í™•ì¸
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerInTrigger = true; // ÇÃ·¹ÀÌ¾î°¡ ¹üÀ§ ¾È¿¡ µé¾î¿ÔÀ½À» ÀúÀå
+            isPlayerInTrigger = true; // í”Œë ˆì´ì–´ê°€ ë²”ìœ„ ì•ˆì— ë“¤ì–´ì™”ìŒì„ ì €ì¥
         }
     }
 
@@ -19,17 +19,17 @@ public class SceneChanger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerInTrigger = false; // ¹üÀ§ ¹ÛÀ¸·Î ³ª°¡¸é false·Î º¯°æ
+            isPlayerInTrigger = false; // ë²”ìœ„ ë°–ìœ¼ë¡œ ë‚˜ê°€ë©´ falseë¡œ ë³€ê²½
         }
     }
 
     private void Update()
     {
-        // ÇÃ·¹ÀÌ¾î°¡ Æ®¸®°Å ¾È¿¡ ÀÖ°í, E Å°¸¦ ´©¸£¸é ¾À ÀÌµ¿
+        // í”Œë ˆì´ì–´ê°€ íŠ¸ë¦¬ê±° ì•ˆì— ìˆê³ , E í‚¤ë¥¼ ëˆ„ë¥´ë©´ ì”¬ ì´ë™
         if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.E))
         {
-            SpawnManager.Instance.SetSpawnPosition(nextSceneName, spawnPosition); // ´ÙÀ½ ¾À ½ºÆù À§Ä¡ ÀúÀå
-            SceneManager.LoadScene(nextSceneName); // ¾À º¯°æ
+            SpawnManager.Instance.SetSpawnPosition(nextSceneName, spawnPosition); // ë‹¤ìŒ ì”¬ ìŠ¤í° ìœ„ì¹˜ ì €ì¥
+            SceneManager.LoadScene(nextSceneName); // ì”¬ ë³€ê²½
         }
     }
 }

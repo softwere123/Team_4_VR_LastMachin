@@ -2,24 +2,24 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHealth = 100; // ÇÃ·¹ÀÌ¾î ÃÖ´ë Ã¼·Â
-    private int currentHealth; // ÇöÀç Ã¼·Â
+    public int maxHealth = 100; // í”Œë ˆì´ì–´ ìµœëŒ€ ì²´ë ¥
+    private int currentHealth; // í˜„ì¬ ì²´ë ¥
 
     void Start()
     {
-        // ½ÃÀÛ ½Ã Ã¼·ÂÀ» ÃÖ´ë Ã¼·ÂÀ¸·Î ÃÊ±âÈ­
+        // ì‹œì‘ ì‹œ ì²´ë ¥ì„ ìµœëŒ€ ì²´ë ¥ìœ¼ë¡œ ì´ˆê¸°í™”
         currentHealth = maxHealth;
     }
 
     public void TakeDamage(int damage)
     {
-        // µ¥¹ÌÁö¸¦ ¹Ş¾Æ Ã¼·ÂÀ» °¨¼Ò
+        // ë°ë¯¸ì§€ë¥¼ ë°›ì•„ ì²´ë ¥ì„ ê°ì†Œ
         currentHealth -= damage;
-        currentHealth = Mathf.Max(currentHealth, 0); // 0 ÀÌÇÏ·Î ¶³¾îÁöÁö ¾Ê°Ô Á¦ÇÑ
+        currentHealth = Mathf.Max(currentHealth, 0); // 0 ì´í•˜ë¡œ ë–¨ì–´ì§€ì§€ ì•Šê²Œ ì œí•œ
 
-        Debug.Log("[PlayerHealth] ÇöÀç Ã¼·Â: " + currentHealth);
+        Debug.Log("[PlayerHealth] í˜„ì¬ ì²´ë ¥: " + currentHealth);
 
-        // Ã¼·ÂÀÌ ¸ğµÎ ¼ÒÁøµÇ¸é »ç¸Á Ã³¸®
+        // ì²´ë ¥ì´ ëª¨ë‘ ì†Œì§„ë˜ë©´ ì‚¬ë§ ì²˜ë¦¬
         if (currentHealth == 0)
         {
             Die();
@@ -28,13 +28,13 @@ public class PlayerHealth : MonoBehaviour
 
     public int GetCurrentHealth()
     {
-        // ÇöÀç Ã¼·Â °ªÀ» ¹İÈ¯
+        // í˜„ì¬ ì²´ë ¥ ê°’ì„ ë°˜í™˜
         return currentHealth;
     }
 
     void Die()
     {
-        Debug.Log("[PlayerHealth] ÇÃ·¹ÀÌ¾î°¡ »ç¸ÁÇß½À´Ï´Ù!");
-        // Á×À½ Ã³¸® ·ÎÁ÷ (°ÔÀÓ ¿À¹ö, ¸®½ºÆù)
+        Debug.Log("[PlayerHealth] í”Œë ˆì´ì–´ê°€ ì‚¬ë§í–ˆìŠµë‹ˆë‹¤!");
+        // ì£½ìŒ ì²˜ë¦¬ ë¡œì§ (ê²Œì„ ì˜¤ë²„, ë¦¬ìŠ¤í°)
     }
 }
