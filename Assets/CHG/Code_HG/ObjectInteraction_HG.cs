@@ -1,34 +1,34 @@
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.SceneManagement; // ¾À ÀüÈ¯À» À§ÇØ ÇÊ¿ä
+using UnityEngine.SceneManagement; // ì”¬ ì „í™˜ì„ ìœ„í•´ í•„ìš”
 
 public class ObjectInteraction : MonoBehaviour
 {
-    public PlayableDirector timeline1;  // Ã¹ ¹øÂ° ¿ÀºêÁ§Æ® Å¸ÀÓ¶óÀÎ
-    public PlayableDirector timeline2;  // µÎ ¹øÂ° ¿ÀºêÁ§Æ® Å¸ÀÓ¶óÀÎ (ÀÚµ¿ ÇÒ´çµÊ)
-    public GameObject object1; // Ã¹ ¹øÂ° ¿ÀºêÁ§Æ®
-    public GameObject object2; // µÎ ¹øÂ° ¿ÀºêÁ§Æ®
-    public Transform player; // ÇÃ·¹ÀÌ¾î À§Ä¡
-    public float interactionDistance = 3f; // E Å°¸¦ ´©¸¦ ¼ö ÀÖ´Â °Å¸®
-    public string nextSceneName; // ÀüÈ¯ÇÒ ¾À ÀÌ¸§
+    public PlayableDirector timeline1;  // ì²« ë²ˆì§¸ ì˜¤ë¸Œì íŠ¸ íƒ€ì„ë¼ì¸
+    public PlayableDirector timeline2;  // ë‘ ë²ˆì§¸ ì˜¤ë¸Œì íŠ¸ íƒ€ì„ë¼ì¸ (ìë™ í• ë‹¹ë¨)
+    public GameObject object1; // ì²« ë²ˆì§¸ ì˜¤ë¸Œì íŠ¸
+    public GameObject object2; // ë‘ ë²ˆì§¸ ì˜¤ë¸Œì íŠ¸
+    public Transform player; // í”Œë ˆì´ì–´ ìœ„ì¹˜
+    public float interactionDistance = 3f; // E í‚¤ë¥¼ ëˆ„ë¥¼ ìˆ˜ ìˆëŠ” ê±°ë¦¬
+    public string nextSceneName; // ì „í™˜í•  ì”¬ ì´ë¦„
 
     void Start()
     {
-        // timeline2°¡ ÇÒ´çµÇÁö ¾Ê¾Ò´Ù¸é ÀÚµ¿À¸·Î Ã£±â
+        // timeline2ê°€ í• ë‹¹ë˜ì§€ ì•Šì•˜ë‹¤ë©´ ìë™ìœ¼ë¡œ ì°¾ê¸°
         if (timeline2 == null)
         {
             timeline2 = GameObject.Find("Timeline_Object2")?.GetComponent<PlayableDirector>();
 
             if (timeline2 == null)
             {
-                Debug.LogError("timeline2°¡ ÇÒ´çµÇÁö ¾Ê¾Ò°í, ÀÚµ¿À¸·Î Ã£À» ¼öµµ ¾øÀ½! Inspector¿¡¼­ Á÷Á¢ ¼³Á¤ÇÏ¼¼¿ä.");
+                Debug.LogError("timeline2ê°€ í• ë‹¹ë˜ì§€ ì•Šì•˜ê³ , ìë™ìœ¼ë¡œ ì°¾ì„ ìˆ˜ë„ ì—†ìŒ! Inspectorì—ì„œ ì§ì ‘ ì„¤ì •í•˜ì„¸ìš”.");
                 return;
             }
         }
 
-        // Å¸ÀÓ¶óÀÎÀÌ ³¡³ª¸é ¾À ÀüÈ¯ ÀÌº¥Æ® ¿¬°á
+        // íƒ€ì„ë¼ì¸ì´ ëë‚˜ë©´ ì”¬ ì „í™˜ ì´ë²¤íŠ¸ ì—°ê²°
         timeline2.stopped += OnTimeline2End;
-        Debug.Log("Å¸ÀÓ¶óÀÎ ÀÌº¥Æ® ¿¬°á ¿Ï·á");
+        Debug.Log("íƒ€ì„ë¼ì¸ ì´ë²¤íŠ¸ ì—°ê²° ì™„ë£Œ");
     }
 
     void Update()
@@ -40,20 +40,20 @@ public class ObjectInteraction : MonoBehaviour
 
             if (object1.activeSelf && distanceToObj1 <= interactionDistance)
             {
-                Debug.Log("Ã¹ ¹øÂ° ¿ÀºêÁ§Æ® Å¸ÀÓ¶óÀÎ ½ÇÇà");
+                Debug.Log("ì²« ë²ˆì§¸ ì˜¤ë¸Œì íŠ¸ íƒ€ì„ë¼ì¸ ì‹¤í–‰");
                 timeline1.Play();
                 Invoke(nameof(DisableObject1), (float)timeline1.duration);
             }
             else if (object2.activeSelf && distanceToObj2 <= interactionDistance)
             {
-                Debug.Log("µÎ ¹øÂ° ¿ÀºêÁ§Æ® Å¸ÀÓ¶óÀÎ ½ÇÇà");
+                Debug.Log("ë‘ ë²ˆì§¸ ì˜¤ë¸Œì íŠ¸ íƒ€ì„ë¼ì¸ ì‹¤í–‰");
                 timeline2.Play();
-                // object2 ºñÈ°¼ºÈ­´Â timeline2.stopped¿¡¼­ Ã³¸®ÇÏµµ·Ï º¯°æ
+                // object2 ë¹„í™œì„±í™”ëŠ” timeline2.stoppedì—ì„œ ì²˜ë¦¬í•˜ë„ë¡ ë³€ê²½
             }
 
             else
             {
-                Debug.Log("°Å¸®°¡ ³Ê¹« ¸Ö¾î¼­ EÅ° ÀÔ·Â ¹«½ÃµÊ.");
+                Debug.Log("ê±°ë¦¬ê°€ ë„ˆë¬´ ë©€ì–´ì„œ Eí‚¤ ì…ë ¥ ë¬´ì‹œë¨.");
             }
         }
     }
@@ -61,32 +61,32 @@ public class ObjectInteraction : MonoBehaviour
     void DisableObject1()
     {
         object1.SetActive(false);
-        Debug.Log("Ã¹ ¹øÂ° ¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­µÊ");
+        Debug.Log("ì²« ë²ˆì§¸ ì˜¤ë¸Œì íŠ¸ ë¹„í™œì„±í™”ë¨");
     }
 
     void DisableObject2()
     {
         object2.SetActive(false);
-        Debug.Log("µÎ ¹øÂ° ¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­µÊ");
+        Debug.Log("ë‘ ë²ˆì§¸ ì˜¤ë¸Œì íŠ¸ ë¹„í™œì„±í™”ë¨");
     }
 
     void OnTimeline2End(PlayableDirector director)
     {
         if (director == timeline2)
         {
-            Debug.Log("Å¸ÀÓ¶óÀÎ Á¾·á, ¾À ÀüÈ¯ ½ÃÀÛ!");
+            Debug.Log("íƒ€ì„ë¼ì¸ ì¢…ë£Œ, ì”¬ ì „í™˜ ì‹œì‘!");
             
             
-            // object2 ²ô±â
+            // object2 ë„ê¸°
             object2.SetActive(false);
 
 
-            //¾À ÀüÈ¯
+            //ì”¬ ì „í™˜
             SceneManager.LoadScene(nextSceneName);
         }
         else
         {
-            Debug.Log("´Ù¸¥ Å¸ÀÓ¶óÀÎÀÌ Á¾·áµÊ");
+            Debug.Log("ë‹¤ë¥¸ íƒ€ì„ë¼ì¸ì´ ì¢…ë£Œë¨");
         }
     }
 }

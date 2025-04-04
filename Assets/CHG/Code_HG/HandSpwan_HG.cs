@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    public Vector3 spawnPosition = new Vector3(0, 1, 0); // ¿øÇÏ´Â À§Ä¡ ¼³Á¤
+    public Vector3 spawnPosition = new Vector3(0, 1, 0); // ì›í•˜ëŠ” ìœ„ì¹˜ ì„¤ì •
 
     void Start()
     {
-        GameObject player = GameObject.FindWithTag("Player"); // ÇÃ·¹ÀÌ¾î Ã£±â
+        GameObject player = GameObject.FindWithTag("Player"); // í”Œë ˆì´ì–´ ì°¾ê¸°
         if (player != null)
         {
-            player.transform.position = spawnPosition; // À§Ä¡ º¯°æ
+            player.transform.position = spawnPosition; // ìœ„ì¹˜ ë³€ê²½
         }
         else
         {
-            Debug.LogError("ÇÃ·¹ÀÌ¾î¸¦ Ã£À» ¼ö ¾øÀ½!");
+            Debug.LogError("í”Œë ˆì´ì–´ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŒ!");
         }
     }
 }

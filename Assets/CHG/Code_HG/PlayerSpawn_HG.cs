@@ -7,6 +7,6 @@ public class PlayerSpawn : MonoBehaviour
     {
         string currentScene = SceneManager.GetActiveScene().name;
         Vector3 spawnPos = SpawnManager.Instance.GetSpawnPosition(currentScene);
-        transform.position = spawnPos; // ¾À¿¡ ¸Â´Â À§Ä¡¿¡¼­ ½ºÆù
+        transform.position = spawnPos; // ì”¬ì— ë§ëŠ” ìœ„ì¹˜ì—ì„œ ìŠ¤í°
     }
 }
