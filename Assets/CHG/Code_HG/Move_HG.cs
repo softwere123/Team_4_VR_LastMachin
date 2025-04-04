@@ -17,28 +17,28 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // ¹Ù´Ú Ã¼Å©
+        // ë°”ë‹¥ ì²´í¬
         isGrounded = controller.isGrounded;
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
         }
 
-        // Å° ÀÔ·Â ¹Ş±â
+        // í‚¤ ì…ë ¥ ë°›ê¸°
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
 
-        // ÀÌµ¿ Àû¿ë
+        // ì´ë™ ì ìš©
         controller.Move(move * speed * Time.deltaTime);
 
-        // Á¡ÇÁ
+        // ì í”„
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
-        // Áß·Â Àû¿ë
+        // ì¤‘ë ¥ ì ìš©
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }

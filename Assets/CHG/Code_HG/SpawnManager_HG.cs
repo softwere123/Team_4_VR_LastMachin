@@ -4,9 +4,9 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public static SpawnManager Instance;
-    private Vector3 defaultSpawn = new Vector3(-14, 2, -13); // ±âº» ½ºÆù À§Ä¡
+    private Vector3 defaultSpawn = new Vector3(-14, 2, -13); // ê¸°ë³¸ ìŠ¤í° ìœ„ì¹˜
 
-    // ¾Àº° ½ºÆù À§Ä¡ ÀúÀå
+    // ì”¬ë³„ ìŠ¤í° ìœ„ì¹˜ ì €ì¥
     private Dictionary<string, Vector3> spawnPositions = new Dictionary<string, Vector3>();
 
     private void Awake()
@@ -22,7 +22,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    // ¾Àº° ½ºÆù À§Ä¡ ÀúÀå
+    // ì”¬ë³„ ìŠ¤í° ìœ„ì¹˜ ì €ì¥
     public void SetSpawnPosition(string sceneName, Vector3 position)
     {
         if (spawnPositions.ContainsKey(sceneName))
@@ -35,13 +35,13 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    // ÇöÀç ¾ÀÀÇ ½ºÆù À§Ä¡ °¡Á®¿À±â
+    // í˜„ì¬ ì”¬ì˜ ìŠ¤í° ìœ„ì¹˜ ê°€ì ¸ì˜¤ê¸°
     public Vector3 GetSpawnPosition(string sceneName)
     {
         if (spawnPositions.ContainsKey(sceneName))
         {
             return spawnPositions[sceneName];
         }
-        return defaultSpawn; // ±âº» À§Ä¡ ¹İÈ¯
+        return defaultSpawn; // ê¸°ë³¸ ìœ„ì¹˜ ë°˜í™˜
     }
 }
