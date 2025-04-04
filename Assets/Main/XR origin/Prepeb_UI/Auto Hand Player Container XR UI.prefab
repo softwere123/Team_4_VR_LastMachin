@@ -996,7 +996,7 @@ GameObject:
   - component: {fileID: 6867408061337404370}
   - component: {fileID: 4253697455790463817}
   m_Layer: 0
-  m_Name: Auto Hand Player Container Battle
+  m_Name: Auto Hand Player Container XR UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

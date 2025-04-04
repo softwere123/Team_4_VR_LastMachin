@@ -196,7 +196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7998224404161615700}
   m_Layer: 4
-  m_Name: Flying
+  m_Name: Player Flying Funtion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
