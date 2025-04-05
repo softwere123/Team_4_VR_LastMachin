@@ -10,9 +10,9 @@ public class SGSprialMultiShot : SGBaseShot
     public float betweenDealy = 0.2f;
     private int nowIndex;
     private float delayTimer;
-    public override void Shot()             //Shot ÇÊ¼ö ±¸Çö ÇÔ¼ö (SGBaseShot)
+    public override void Shot()             //Shot í•„ìˆ˜ êµ¬í˜„ í•¨ìˆ˜ (SGBaseShot)
     {
-        if (projectileNum <= 0 || projectileSpeed <= 0f || spiralWayNum <= 0)    //¿É¼Ç°ª°Ë»ç
+        if (projectileNum <= 0 || projectileSpeed <= 0f || spiralWayNum <= 0)    //ì˜µì…˜ê°’ê²€ì‚¬
         {
             return;
         }
@@ -32,7 +32,7 @@ public class SGSprialMultiShot : SGBaseShot
         }
         delayTimer -= SGTimer.Instance.deltaTime;
 
-        while (delayTimer <= 0)        //ÃÑ¾Ë µô·¹ÀÌ°¡ ´Ù µÉ°æ¿ì
+        while (delayTimer <= 0)        //ì´ì•Œ ë”œë ˆì´ê°€ ë‹¤ ë ê²½ìš°
         {
             float spiralWayShiftAngle = 360f / spiralWayNum;
 
@@ -45,6 +45,7 @@ public class SGSprialMultiShot : SGBaseShot
                 }
                 float angle = startAngle + (spiralWayShiftAngle * i) + (shiftAngle * Mathf.Floor(nowIndex / spiralWayNum));
                 ShotProjectile(projectile, projectileSpeed, angle);
+                OnProjectileFired();
                 projectile.UpdateMove(-delayTimer);
                 nowIndex++;
                 if (nowIndex >= projectileNum)
@@ -60,5 +61,10 @@ public class SGSprialMultiShot : SGBaseShot
             }
             delayTimer += betweenDealy;
         }
+    }
+
+    protected virtual void OnProjectileFired()
+    {
+        Debug.Log("ì´ì•Œ ë°œì‚¬ë¨!");   // ë˜ëŠ” ë„¤ê°€ ì›í•˜ëŠ” ë™ì‘
     }
 }
