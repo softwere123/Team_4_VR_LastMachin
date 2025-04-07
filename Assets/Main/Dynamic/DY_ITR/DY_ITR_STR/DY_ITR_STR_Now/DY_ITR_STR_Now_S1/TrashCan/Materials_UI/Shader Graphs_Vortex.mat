@@ -59,7 +59,7 @@ Material:
     - _Float: 53.92
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Speed: 10.89
+    - _Speed: 0.99
     m_Colors:
-    - _Color: {r: 0, g: 0, b: 0, a: 0}
+    - _Color: {r: 1, g: 0.7568628, b: 0.027450982, a: 0}
   m_BuildTextureStacks: []
