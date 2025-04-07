@@ -4,27 +4,10 @@ using UnityEngine;
 
 public class CubeMovement : MonoBehaviour
 {
-    public float speed = 10.0f;
-  
+    public float speed = 5f; // 총알 속도
 
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        this.gameObject.transform.position -= new Vector3(0.0f, 0.0f, speed * Time.deltaTime);
-
-        if (transform.position.z < -50.0f)
-        {
-            Destroy(this.gameObject);
-        }
-           
+        transform.position += transform.forward * speed * Time.deltaTime;
     }
 }
