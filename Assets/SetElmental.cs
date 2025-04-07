@@ -1,52 +1,38 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Autohand;
 
 public class SetElemental : MonoBehaviour
 {
-    public Grabbable[] Fwood;
-    public Grabbable[] Ffire;
-    // public XRRayInteractor[] Fteleport; // 필요 시 사용
+    public List<DistanceGrabbable> magneticObjects; // 마그네틱: DistanceGrabbable 리스트
+    public List<Grabbable> fireObjects;             // 파이어: Grabbable 리스트
 
     public void SetType(int index)
     {
-        SetFwood(false);
-        SetFfire(false);
-        // SetFteleport(false);
+        Debug.Log($"SetType 호출됨, index: {index}");
 
-        if (index == 1)
-            SetFwood(true);
-        else if (index == 2)
-            SetFfire(true);
-        // else if (index == 3)
-        //     SetFteleport(true);
+        bool isMagnetic = (index == 1);
+        bool isFire = (index == 2);
+
+        SetMagneticObjects(isMagnetic);
+        SetGrabbable(fireObjects, isFire);
     }
 
-    private void SetFwood(bool enabled)
+    private void SetMagneticObjects(bool enable)
     {
-        foreach (var obj in Fwood)
+        foreach (var distanceGrab in magneticObjects)
         {
-            if (obj != null)
-                obj.enabled = enabled;
+            distanceGrab.enabled = enable;
+            Debug.Log($"Magnetic Object '{distanceGrab.gameObject.name}' set to {(enable ? "ENABLED" : "DISABLED")}");
         }
     }
 
-    private void SetFfire(bool enabled)
+    private void SetGrabbable(List<Grabbable> grabbables, bool enable)
     {
-        foreach (var obj in Ffire)
+        foreach (var grab in grabbables)
         {
-            if (obj != null)
-                obj.enabled = enabled;
+            grab.enabled = enable;
+            Debug.Log($"Fire Object '{grab.gameObject.name}' set to {(enable ? "ENABLED" : "DISABLED")}");
         }
     }
-
-    //private void SetFteleport(bool enabled)
-    //{
-    //    foreach (var obj in Fteleport)
-    //    {
-    //        if (obj != null)
-    //            obj.enabled = enabled;
-    //    }
-    //}
 }
