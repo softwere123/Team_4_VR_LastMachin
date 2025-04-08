@@ -7,25 +7,14 @@ using UnityEngine.Events;
 using Unity.XR.OpenVR;
 using Autohand.Demo;
 
-//½ÇÁ¦ º¸¿©Áö´Â ºÎºĞ: ¶óµğ¿ì½º ÇüÅÂ Ui·Î ¼±ÅÃ½Ã »óÅÂ°ªÀ» º¯È¯ÇÑ´Ù
+//ì‹¤ì œ ë³´ì—¬ì§€ëŠ” ë¶€ë¶„: ë¼ë””ìš°ìŠ¤ í˜•íƒœ Uië¡œ ì„ íƒì‹œ ìƒíƒœê°’ì„ ë³€í™˜í•œë‹¤
 
-//ÄÚµå 3ÁÙ¿ä¾à ¸®½ºÆ®·Î ÀÌ¹ÌÁö»ı¼º Æ®·£½ºÆûÀ¸·Î À§Ä¡°ª°¡Á®¿À±â  ¸®½ºÆ®¸¦ UI ÇÁ¸®ÆÕ°ú ¹Ù²ãÄ¡´Â ÇÔ¼ö»ı¼º
-// 4°³ÀÇ 5°³ ¿øÇÏ´Â ¸¸Å­ »ı¼º°¡´É ±×ÈÄ ¼ÕÀÇ À§Ä¡°ª°ú ¶óµğ¿ì½ºÀÇ °Å¸®¸¦ ÇÇÅ¸°í¶ó½º Á¤¸®·Î °è»êÈÄ ¹æ»çÇü ¹éÅÍ °ª°¡Á®¿À°í
-// ±×°ªÀÌ 1¾¿ ´Ã¾î³ª´Â Æ÷ÀÌÄ¡¹® »ı¼ºÈÄ 1¸¶´Ù º¯È¯°ª Àû¾îÁÖ¸é ³¡ ¾ÆÁ÷ ´õ ¿¬±¸°¡ ÇÊ¿ä ´Ù ÀÌÇØ¸øÇè
+//ì½”ë“œ 3ì¤„ìš”ì•½ ë¦¬ìŠ¤íŠ¸ë¡œ ì´ë¯¸ì§€ìƒì„± íŠ¸ëœìŠ¤í¼ìœ¼ë¡œ ìœ„ì¹˜ê°’ê°€ì ¸ì˜¤ê¸°  ë¦¬ìŠ¤íŠ¸ë¥¼ UI í”„ë¦¬íŒ¹ê³¼ ë°”ê¿”ì¹˜ëŠ” í•¨ìˆ˜ìƒì„±
+// 4ê°œì˜ 5ê°œ ì›í•˜ëŠ” ë§Œí¼ ìƒì„±ê°€ëŠ¥ ê·¸í›„ ì†ì˜ ìœ„ì¹˜ê°’ê³¼ ë¼ë””ìš°ìŠ¤ì˜ ê±°ë¦¬ë¥¼ í”¼íƒ€ê³ ë¼ìŠ¤ ì •ë¦¬ë¡œ ê³„ì‚°í›„ ë°©ì‚¬í˜• ë°±í„° ê°’ê°€ì ¸ì˜¤ê³ 
+// ê·¸ê°’ì´ 1ì”© ëŠ˜ì–´ë‚˜ëŠ” í¬ì´ì¹˜ë¬¸ ìƒì„±í›„ 1ë§ˆë‹¤ ë³€í™˜ê°’ ì ì–´ì£¼ë©´ ë ì•„ì§ ë” ì—°êµ¬ê°€ í•„ìš” ë‹¤ ì´í•´ëª»í—˜
 public class RadialSelectiom : MonoBehaviour
 {
-    private XRHandControllerLink handController;
 
-    void Start()
-    {
-        handController = GetComponent<XRHandControllerLink>();
-        if (handController == null)
-        {
-            Debug.LogError("XRHandControllerLink°¡ ¾øÀ½! Auto Hand°¡ ¿Ã¹Ù¸£°Ô ¼³Á¤µÇ¾ú´ÂÁö È®ÀÎÇÏ¼¼¿ä.");
-        }
-    }
-
-    public CommonButton spawnButton = CommonButton.primaryButton;
 
     //public bool ButtonReleased(CommonButton button)
     //{
@@ -34,83 +23,106 @@ public class RadialSelectiom : MonoBehaviour
 
     //    if (device.TryGetFeatureValue(GetCommonButton(button), out bool pressed))
     //    {
-    //        return !pressed; // ¹öÆ°¿¡¼­ ¼ÕÀ» ¶¾ °æ¿ì
+    //        return !pressed; // ë²„íŠ¼ì—ì„œ ì†ì„ ë—€ ê²½ìš°
     //    }
 
     //    return false;
     //}
 
-    //public OVRInputBOuttom spawnButton; // ÀÌºÎºĞÀÌ °¡Á®¿Ã¼ö¾ø¾î ´Ù¸¥°ÍÀ¸·Î ´ëÃ¼¿ä¸Á ¿ÀÅäÇÚµå¿¡¼­ »óÈ£ÀÛ¿ë°¡´ÉÇÑ°É·Î
+    //public OVRInputBOuttom spawnButton; // ì´ë¶€ë¶„ì´ ê°€ì ¸ì˜¬ìˆ˜ì—†ì–´ ë‹¤ë¥¸ê²ƒìœ¼ë¡œ ëŒ€ì²´ìš”ë§ ì˜¤í† í•¸ë“œì—ì„œ ìƒí˜¸ì‘ìš©ê°€ëŠ¥í•œê±¸ë¡œ
+
+    private XRHandControllerLink handController; //  ì† ì»¨íŠ¸ë¡¤ëŸ¬ ë§í¬ë¥¼ ê°€ì ¸ì˜¨ë‹¤
+    
+    public AudioSource radialSound; // ì¶”ê°€: ì‚¬ìš´ë“œë¥¼ ì¬ìƒí•  ì˜¤ë””ì˜¤ ì†ŒìŠ¤
+    private bool isPlayingSound = false; // í˜„ì¬ ì‚¬ìš´ë“œê°€ ì¬ìƒ ì¤‘ì¸ì§€ ì²´í¬
+
+    public CommonButton spawnButton = CommonButton.primaryButton; // ë²„íŠ¼ì„ ëˆŒë €ëŠ”ì§€ ì²´í¬í•˜ëŠ” ë³€ìˆ˜
+    private bool isSlowed = false;// íƒ€ì„ ìŠ¤ì¼€ì¼ì„ ì¡°ì ˆí•˜ê¸° ìœ„í•œ ë³€ìˆ˜
+    private bool soundPlayed = false; // ì‚¬ìš´ë“œê°€ ì¬ìƒë˜ì—ˆëŠ”ì§€ ì²´í¬í•˜ëŠ” ë³€ìˆ˜
+    [Range(2 , 10)] //ì´ë¯¸ì§€ ê°¯ìˆ˜ <ë²”ìœ„ ë“œë˜ê·¸ ë²”ìœ„ ì„¤ì •
+    public int numberOfRadialPart; //ì—¬ê¸°ì— ë²”ìœ„ ì„¤ì •ëœ ìˆ«ìë¥¼ ë„£ì–´ì¤€ë‹¤ 
+    public GameObject radialPartPrefab;//ìƒì„±í•  ì´ë¯¸ì§€ë¥¼ ë„£ì–´ì¤€ë‹¤ 
+    public Transform radialPartCanvas;  //ì´ë¯¸ì§€ë¥¼ ìƒì„±í•  ìº”ë²„ìŠ¤ì˜ ìœ„ì¹˜ë¥¼ ì„¤ì •í•œë‹¤
+    public float angleBetweenPart = 10f; //ì´ë¯¸ì§€ ê°„ì˜ ê°ë„ë¥¼ ì„¤ì •í•œë‹¤
+    public Transform handTransform; //ì†ì˜ ìœ„ì¹˜ë¥¼ ì„¤ì •í•œë‹¤
+
+    public UnityEvent<int> OnPartSelected; //ì´ë²¤íŠ¸ë¥¼ ì„¤ì •í•œë‹¤
+
+    private List<GameObject> spawnedParts = new List<GameObject>(); //ìƒì„±ëœ ì´ë¯¸ì§€ë¥¼ ë¦¬ìŠ¤íŠ¸ì— ë„£ì–´ì¤€ë‹¤ 
+    private int currentSelectedRadialPart = 0; //í˜„ì¬ ì„ íƒëœ ì´ë¯¸ì§€ë¥¼ ì„¤ì •í•œë‹¤
+
+    public AudioSource clickSound; // Inspectorì—ì„œ ì†Œë¦¬ ì—°ê²°í•´ì£¼ê¸°
 
 
+    void Start()
+    {
 
-    [Range(2 , 10)] //ÀÌ¹ÌÁö °¹¼ö <¹üÀ§ µå·¡±× ¹üÀ§ ¼³Á¤
-    public int numberOfRadialPart; //¿©±â¿¡ ¹üÀ§ ¼³Á¤µÈ ¼ıÀÚ¸¦ ³Ö¾îÁØ´Ù 
-    public GameObject radialPartPrefab;//»ı¼ºÇÒ ÀÌ¹ÌÁö¸¦ ³Ö¾îÁØ´Ù 
-    public Transform radialPartCanvas; 
-    public float angleBetweenPart = 10f; //ÀÌ¹ÌÁö °£ÀÇ °¢µµ¸¦ ¼³Á¤ÇÑ´Ù
-    public Transform handTransform; //¼ÕÀÇ À§Ä¡¸¦ ¼³Á¤ÇÑ´Ù
-
-    public UnityEvent<int> OnPartSelected; //ÀÌº¥Æ®¸¦ ¼³Á¤ÇÑ´Ù
-
-    private List<GameObject> spawnedParts = new List<GameObject>(); //»ı¼ºµÈ ÀÌ¹ÌÁö¸¦ ¸®½ºÆ®¿¡ ³Ö¾îÁØ´Ù 
-    private int currentSelectedRadialPart = 0; //ÇöÀç ¼±ÅÃµÈ ÀÌ¹ÌÁö¸¦ ¼³Á¤ÇÑ´Ù
+        handController = GetComponent<XRHandControllerLink>();
+        if (handController == null)
+        {
+            Debug.LogError("XRHandControllerLinkê°€ ì—†ìŒ! Auto Handê°€ ì˜¬ë°”ë¥´ê²Œ ì„¤ì •ë˜ì—ˆëŠ”ì§€ í™•ì¸í•˜ì„¸ìš”.");
+        }
+    }
     // Start is called before the first frame update
-   
+
     void Update()
     {
         if (handController != null)
         {
             if (handController.ButtonPressed(spawnButton))
-            { // ¹öÆ° ´­·¶À» ¶§
+            { // ë²„íŠ¼ ëˆŒë €ì„ ë•Œ
                 SpawnedRadoalPart();
             }
 
             if (handController.ButtonPressed(spawnButton))
-            { // ¹öÆ° °è¼Ó ´©¸£°í ÀÖÀ» ¶§
+            { // ë²„íŠ¼ ê³„ì† ëˆ„ë¥´ê³  ìˆì„ ë•Œ
                 GetSelectedRadiaPart();
             }
 
             if (!handController.ButtonPressed(spawnButton))
-            { // ¹öÆ°¿¡¼­ ¼Õ ¶¿ ¶§
+            { // ë²„íŠ¼ì—ì„œ ì† ë—„ ë•Œ
                 HideAndTriggerSelected();
             }
         }
     }
 
-    public void HideAndTriggerSelected() //¼±ÅÃµÈ ÀÌ¹ÌÁö¸¦ ¼û±â°í ÀÌº¥Æ®¸¦ ¹ß»ı½ÃÅ²´Ù
+
+
+
+
+    public void HideAndTriggerSelected() //ì„ íƒëœ ì´ë¯¸ì§€ë¥¼ ìˆ¨ê¸°ê³  ì´ë²¤íŠ¸ë¥¼ ë°œìƒì‹œí‚¨ë‹¤
     {
         
-        OnPartSelected.Invoke(currentSelectedRadialPart); //ÀÌº¥Æ®¸¦ ¹ß»ı½ÃÅ²´Ù
-        radialPartCanvas.gameObject.SetActive(false); //ÀÌ¹ÌÁö¸¦ ¼û±ä´Ù
+        OnPartSelected.Invoke(currentSelectedRadialPart); //ì´ë²¤íŠ¸ë¥¼ ë°œìƒì‹œí‚¨ë‹¤
+        radialPartCanvas.gameObject.SetActive(false); //ì´ë¯¸ì§€ë¥¼ ìˆ¨ê¸´ë‹¤
     }
     public void GetSelectedRadiaPart()
     {
         Vector3 centerToHand = handTransform.position - radialPartCanvas.position;
-        //¼ÕÀÇ À§Ä¡¸¦ ¼³Á¤ÇÑ´Ù ¿¡¸¦ µé¾î AºÎÅÍ B ±× °¡´Â°Å¸®¸¦ ÇÚµå Æ®·£½ºÆûÀ¸·Î ¹éÅÍ¸¦ °¡Á®¿Í ¾î¶² ¶óµğ¿ì½º ÀÌ¹ÌÁö¸¦ È®ÀÎÇß´ÂÁö º¸¿©ÁØ´õ
+        //ì†ì˜ ìœ„ì¹˜ë¥¼ ì„¤ì •í•œë‹¤ ì—ë¥¼ ë“¤ì–´ Aë¶€í„° B ê·¸ ê°€ëŠ”ê±°ë¦¬ë¥¼ í•¸ë“œ íŠ¸ëœìŠ¤í¼ìœ¼ë¡œ ë°±í„°ë¥¼ ê°€ì ¸ì™€ ì–´ë–¤ ë¼ë””ìš°ìŠ¤ ì´ë¯¸ì§€ë¥¼ í™•ì¸í–ˆëŠ”ì§€ ë³´ì—¬ì¤€ë”
         Vector3 centerToHandProjected = Vector3.ProjectOnPlane(centerToHand, radialPartCanvas.forward);
 
-        float angle = Vector3.SignedAngle(radialPartCanvas.up, centerToHandProjected, -radialPartCanvas.forward); //°¢µµ°¡ 180ÀÌ»óÀ¸·Î ¾È°¡°Ô ¤¿¤±µç´Ù
+        float angle = Vector3.SignedAngle(radialPartCanvas.up, centerToHandProjected, -radialPartCanvas.forward); //ê°ë„ê°€ 180ì´ìƒìœ¼ë¡œ ì•ˆê°€ê²Œ ã…ã…ë“ ë‹¤
 
         if (angle < 0)       
             angle += 360;
         
-        //°¢µµ¸¦ ¾ò¾ú´Ù
+        //ê°ë„ë¥¼ ì–»ì—ˆë‹¤
         Debug.Log("ANGLE" + angle);
 
-        currentSelectedRadialPart = (int) angle * numberOfRadialPart / 360;  //int·Î º¯È¯
+        currentSelectedRadialPart = (int) angle * numberOfRadialPart / 360;  //intë¡œ ë³€í™˜
 
-        for (int i = 0; i < spawnedParts.Count; i++) //ÀÌ¹ÌÁö ¹æ»çÇü°ªÀ¸·Î ¾îµğ ºÎºĞÀÌÁö °Ë»ç
+        for (int i = 0; i < spawnedParts.Count; i++) //ì´ë¯¸ì§€ ë°©ì‚¬í˜•ê°’ìœ¼ë¡œ ì–´ë”” ë¶€ë¶„ì´ì§€ ê²€ì‚¬
         {
             if (i == currentSelectedRadialPart)
             {
-                spawnedParts[i].GetComponent<Image>().color = Color.yellow; //ÀÌ¹ÌÁö »ö»óÀ» Èò»öÀ¸·Î ¼³Á¤
+                spawnedParts[i].GetComponent<Image>().color = Color.yellow; //ì´ë¯¸ì§€ ìƒ‰ìƒì„ í°ìƒ‰ìœ¼ë¡œ ì„¤ì •
                 spawnedParts[i].transform.localScale = 1.1f * Vector3.one;
 
             }
             else
             {
-                spawnedParts[i].GetComponent<Image>().color = Color.white; //ÀÌ¹ÌÁö »ö»óÀ» Èò»öÀ¸·Î ¼³Á¤
+                spawnedParts[i].GetComponent<Image>().color = Color.white; //ì´ë¯¸ì§€ ìƒ‰ìƒì„ í°ìƒ‰ìœ¼ë¡œ ì„¤ì •
                 spawnedParts[i].transform.localScale = Vector3.one;
 
             }
@@ -119,31 +131,36 @@ public class RadialSelectiom : MonoBehaviour
        
     }
 
-    public void SpawnedRadoalPart() //»ı¼ºµÈ ÀÌ¹ÌÁö¸¦ ¶óµğ¿ì½º ÇüÅÂ·Î ¹èÄ¡ÇÏ´Â ÇÔ¼ö
+    public void SpawnedRadoalPart() //ìƒì„±ëœ ì´ë¯¸ì§€ë¥¼ ë¼ë””ìš°ìŠ¤ í˜•íƒœë¡œ ë°°ì¹˜í•˜ëŠ” í•¨ìˆ˜
     {
-        radialPartCanvas.gameObject.SetActive(true); //ÀÌ¹ÌÁö¸¦ º¸¿©ÁØ´Ù
-        radialPartCanvas.rotation = handTransform.rotation; //¼ÕÀÇ À§Ä¡¸¦ ¼³Á¤ÇÑ´Ù   
-        radialPartCanvas.position = handTransform.position; //¼ÕÀÇ À§Ä¡¸¦ ¼³Á¤ÇÑ´Ù   
+        radialPartCanvas.gameObject.SetActive(true); //ì´ë¯¸ì§€ë¥¼ ë³´ì—¬ì¤€ë‹¤
+                                                     //radialPartCanvas.rotation = handTransform.rotation; //ì†ì˜ ìœ„ì¹˜ë¥¼ ì„¤ì •í•œë‹¤   
+                                                     //radialPartCanvas.position = handTransform.position; //ì†ì˜ ìœ„ì¹˜ë¥¼ ì„¤ì •í•œë‹¤   
+                                                     // ì†ì˜ ìœ„ì¹˜ë§Œ ë”°ë¼ê°€ê³ 
+        radialPartCanvas.position = handTransform.position;
 
-        foreach (var item in spawnedParts ) //»ı¼ºµÈ ÀÌ¹ÌÁö¸¦ ¸®½ºÆ®¿¡ ³Ö¾îÁØ´Ù
+        // ì†ì˜ ì •ë©´(forward) ë°©í–¥ë§Œ ë§ì¶˜ë‹¤ (íšŒì „ ì „ì²´ë¥¼ ë³µì‚¬í•˜ì§€ ì•Šê³ )
+        radialPartCanvas.forward = handTransform.forward;
+
+        foreach (var item in spawnedParts ) //ìƒì„±ëœ ì´ë¯¸ì§€ë¥¼ ë¦¬ìŠ¤íŠ¸ì— ë„£ì–´ì¤€ë‹¤
         {
-            Destroy(item); //ÀÌ¹ÌÁö¸¦ »èÁ¦ÇÑ´Ù
+            Destroy(item); //ì´ë¯¸ì§€ë¥¼ ì‚­ì œí•œë‹¤
         }
 
-        spawnedParts.Clear(); //¸®½ºÆ®¸¦ ºñ¿î´Ù
+        spawnedParts.Clear(); //ë¦¬ìŠ¤íŠ¸ë¥¼ ë¹„ìš´ë‹¤
 
-        for (int i = 0; i < numberOfRadialPart; i++) //ÀÌ¹ÌÁö °¹¼ö¸¸Å­ ¹İº¹ Áï À§¿¡ ³ÖÀº ¼ıÀÚ¸¸Å­ »ı¼ºÈÄ ³ª´²ÁÖ´Â ¿ªÈ° ¿¹¼úÀûÀÌ±º.
+        for (int i = 0; i < numberOfRadialPart; i++) //ì´ë¯¸ì§€ ê°¯ìˆ˜ë§Œí¼ ë°˜ë³µ ì¦‰ ìœ„ì— ë„£ì€ ìˆ«ìë§Œí¼ ìƒì„±í›„ ë‚˜ëˆ ì£¼ëŠ” ì—­í™œ ì˜ˆìˆ ì ì´êµ°.
         {
-            float angle = -i * 360 / numberOfRadialPart - angleBetweenPart /2; //È¸Àü½ÃÅ³ À½½Ä  //z ÃàÀ¸·Î È¸ÀüÇØ Æ÷ÀÌÄ¡¹®ÀÌ ¹İ´ë·Î°£´Ù ±×°É ¼öÁ¤ÇÏ·Á¸é i-1·Î ¹Ù²Ù¸éµÈ´Ù
-            Vector3 radialPartEulerAngle = new Vector3(0, 0, angle); // È¸Àü ½ÃÅ³À½½Ä ±×¸© »ı¼º
+            float angle = -i * 360 / numberOfRadialPart - angleBetweenPart /2; //íšŒì „ì‹œí‚¬ ìŒì‹  //z ì¶•ìœ¼ë¡œ íšŒì „í•´ í¬ì´ì¹˜ë¬¸ì´ ë°˜ëŒ€ë¡œê°„ë‹¤ ê·¸ê±¸ ìˆ˜ì •í•˜ë ¤ë©´ i-1ë¡œ ë°”ê¾¸ë©´ëœë‹¤
+            Vector3 radialPartEulerAngle = new Vector3(0, 0, angle); // íšŒì „ ì‹œí‚¬ìŒì‹ ê·¸ë¦‡ ìƒì„±
 
-            GameObject spawnedRadoalPart = Instantiate(radialPartPrefab, radialPartCanvas); // À½½Ä È¸ÀüÈÄ À½½ÄÃß°¡ÇÒ °øÀå »ı¼º ÈÄ À§Ä¡ ±×¸© ÁöÁ¤
-            spawnedRadoalPart.transform.position = radialPartCanvas.position;    //±×¸©ÀÇ À§Ä¡
-            spawnedRadoalPart.transform.localEulerAngles= radialPartEulerAngle;  // ±×¸©ÀÇ °¢µµ
+            GameObject spawnedRadoalPart = Instantiate(radialPartPrefab, radialPartCanvas); // ìŒì‹ íšŒì „í›„ ìŒì‹ì¶”ê°€í•  ê³µì¥ ìƒì„± í›„ ìœ„ì¹˜ ê·¸ë¦‡ ì§€ì •
+            spawnedRadoalPart.transform.position = radialPartCanvas.position;    //ê·¸ë¦‡ì˜ ìœ„ì¹˜
+            spawnedRadoalPart.transform.localEulerAngles= radialPartEulerAngle;  // ê·¸ë¦‡ì˜ ê°ë„
 
-            spawnedRadoalPart.GetComponent<Image>().fillAmount = (1 / (float)numberOfRadialPart) - (angleBetweenPart/360);   //ÇÃ·¹ÀÌÆÃ ÀÌ¹ÌÁö ³Ö°í °¢µµ ¹× Æ÷Áö¼Ç ¼³Á¤ , ¾ó¸¶³ª »ı¼ºÇÏ¿´´ÂÁö ¼ıÀÚ ÃøÁ¤
+            spawnedRadoalPart.GetComponent<Image>().fillAmount = (1 / (float)numberOfRadialPart) - (angleBetweenPart/360);   //í”Œë ˆì´íŒ… ì´ë¯¸ì§€ ë„£ê³  ê°ë„ ë° í¬ì§€ì…˜ ì„¤ì • , ì–¼ë§ˆë‚˜ ìƒì„±í•˜ì˜€ëŠ”ì§€ ìˆ«ì ì¸¡ì •
 
-            spawnedParts.Add(spawnedRadoalPart); //»ı¼ºµÈ ÀÌ¹ÌÁö¸¦ ¸®½ºÆ®¿¡ ³Ö¾îÁØ´Ù
+            spawnedParts.Add(spawnedRadoalPart); //ìƒì„±ëœ ì´ë¯¸ì§€ë¥¼ ë¦¬ìŠ¤íŠ¸ì— ë„£ì–´ì¤€ë‹¤
         }
     }
 }

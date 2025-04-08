@@ -244,5 +244,8 @@ dotnet_naming_style.i로_시작.required_suffix =
 dotnet_naming_style.i로_시작.word_separator = 
 dotnet_naming_style.i로_시작.capitalization = pascal_case
 
+
+
+
 [*]
 charset = utf-8
