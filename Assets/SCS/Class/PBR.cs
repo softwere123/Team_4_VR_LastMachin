@@ -45,6 +45,7 @@ public class PBR : Monster
             else
             {
                 agent.isStopped = true;
+
             }
 
             // 패턴 발동 시도 → 공격 중 아닐 때는 항상 시도

@@ -8,7 +8,12 @@ public class SGLinearShot : SGBaseShot
     public float betweenDelay = 0.1f;
 
     private int nowIndex;
-    private float delayTimer;
+    public float delayTimer;
+    public float delayTime;
+    private void Start()
+    {
+        delayTime = delayTimer;
+    }
 
     public override void Shot()
     {
@@ -21,8 +26,6 @@ public class SGLinearShot : SGBaseShot
             return;
         }
         _shooting = true;
-        nowIndex = 0;
-        delayTimer = 0;
     }
 
     protected virtual void Update()
@@ -31,6 +34,7 @@ public class SGLinearShot : SGBaseShot
         {
             return;
         }
+        delayTimer = delayTime;
         delayTimer -= SGTimer.Instance.deltaTime;
 
         while (delayTimer < 0)
