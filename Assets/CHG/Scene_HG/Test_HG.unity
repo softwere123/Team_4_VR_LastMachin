@@ -335,7 +335,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4569373095596585180, guid: a8bfc5cad81785745bf290fb1f48b1ec,
         type: 3}
+      propertyPath: _initializePoolList.Array.data[1].initialPoolNum
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569373095596585180, guid: a8bfc5cad81785745bf290fb1f48b1ec,
+        type: 3}
       propertyPath: _initializePoolList.Array.data[0].projectilePrefab
+      value: 
+      objectReference: {fileID: 7567647966786925463, guid: 0af3ae2e475f0924d8e5b7cf706a1f8a,
+        type: 3}
+    - target: {fileID: 4569373095596585180, guid: a8bfc5cad81785745bf290fb1f48b1ec,
+        type: 3}
+      propertyPath: _initializePoolList.Array.data[1].projectilePrefab
       value: 
       objectReference: {fileID: 7567647966786925463, guid: 0af3ae2e475f0924d8e5b7cf706a1f8a,
         type: 3}
@@ -356,6 +367,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shoot
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268242051707137542, guid: 01339ddb2af432340bb25a9cc534ba41,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1268242051707137542, guid: 01339ddb2af432340bb25a9cc534ba41,
         type: 3}
@@ -615,9 +631,9 @@ MonoBehaviour:
   pauseTime: 0
   resumeTime: 0
   useAutoRelease: 1
-  autoReleaseTime: 10
+  autoReleaseTime: 5
   angle: 180
-  betweenDelay: 0.1
+  betweenDelay: 1
 --- !u!114 &2126873563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -638,7 +654,9 @@ MonoBehaviour:
   startOnEnable: 0
   startOnEnableDelay: 1
   loop: 1
-  shotList: []
+  shotList:
+  - shotObj: {fileID: 2126873562}
+    afterDelay: 1
   updateStep: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
