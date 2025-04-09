@@ -22,13 +22,11 @@ public class PBR : Monster
     protected override void Start()
     {
         base.Start();
-        shotCtrl = GetComponent<SGShotCtrl>();
     }
 
     void Update()
     {
         if (player == null || agent == null) return;
-
 
         if (isAttacking)
         {
