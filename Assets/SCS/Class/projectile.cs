@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class projectile : MonoBehaviour
 {
-    public int damage = 10; // Åõ»çÃ¼ °ø°İ·Â
+    public int damage = 10; // íˆ¬ì‚¬ì²´ ê³µê²©ë ¥
     void Start()
     {
-        Destroy(gameObject, 6f); // 3ÃÊ ÈÄ¿¡ ¿ÀºêÁ§Æ® »èÁ¦
+        Destroy(gameObject, 6f); // 3ì´ˆ í›„ì— ì˜¤ë¸Œì íŠ¸ ì‚­ì œ
     }
 
     private void OnTriggerEnter(Collider other)
     {
         Unit unit = other.GetComponent<Unit>();
-        if (unit != null) // Unit Å¬·¡½º¸¦ »ó¼Ó¹ŞÀº ¿ÀºêÁ§Æ®ÀÎÁö È®ÀÎ
+        if (unit != null) // Unit í´ë˜ìŠ¤ë¥¼ ìƒì†ë°›ì€ ì˜¤ë¸Œì íŠ¸ì¸ì§€ í™•ì¸
         {
             unit.TakeDamage(damage);
-            Destroy(gameObject); // Åõ»çÃ¼ Á¦°Å
+            Destroy(gameObject); // íˆ¬ì‚¬ì²´ ì œê±°
         }
     }
 }
