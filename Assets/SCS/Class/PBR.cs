@@ -37,7 +37,8 @@ public class PBR : Monster
             lookDir.y = 0;
             if (lookDir != Vector3.zero)
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
-            //animator.SetBool("")
+            animator.SetBool("IsShooting", true);
+
         }
         else
         {

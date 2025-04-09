@@ -1105,6 +1105,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Damping: 0
+--- !u!114 &1713065811 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3829471118123594831, guid: ce73600e15cb43f48bd3657f2c23d634,
+    type: 3}
+  m_PrefabInstance: {fileID: 9095044754617146696}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c64d94c8460dab489bd3112478b8167, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1764214107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1821,6 +1833,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2774912231761573146, guid: ce73600e15cb43f48bd3657f2c23d634,
+        type: 3}
+      propertyPath: shotCtrl
+      value: 
+      objectReference: {fileID: 1713065811}
     - target: {fileID: 2774912231761573146, guid: ce73600e15cb43f48bd3657f2c23d634,
         type: 3}
       propertyPath: maxHealth
