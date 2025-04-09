@@ -5,18 +5,24 @@ public class PBR : Monster
 {
     private Dictionary<string, string> patternToAnimTrigger = new Dictionary<string, string>()
     {
-        { "Slash", "SlashAnim" },
-        { "CastSlash", "CastSlashAnim" }
+        { "Shoot", "Shoot" },
+        { "Reloed", "Reload" }
     };
 
     public string currentAnimTrigger;
     public bool isAttacking = false;
-    public float chaseDistance = 10f;
+    public float chaseRange = 30f;
+    public float shotingRange = 11f;
+    public float ReloedTime = 3f;
+    private float ReloedTimer = 0f;
+    public SGShotCtrl shotCtrl;
+
 
 
     protected override void Start()
     {
         base.Start();
+        shotCtrl = GetComponent<SGShotCtrl>();
     }
 
     void Update()
@@ -31,25 +37,36 @@ public class PBR : Monster
             lookDir.y = 0;
             if (lookDir != Vector3.zero)
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
+            //animator.SetBool("")
         }
         else
         {
             float distance = Vector3.Distance(transform.position, player.position);
 
 
-            if (distance <= chaseDistance)
+            if (distance <= chaseRange)
             {
                 agent.isStopped = false;
                 agent.SetDestination(player.position);
+            }
+            else if (distance >= shotingRange)
+            {
+                agent.isStopped = true;
+                ChangePattern("Shoot");
+                Debug.Log("Shooting Pattern 진입"); // 이게 뜨는지 확인
+                Debug.Log(distance); // 이게 뜨는지 확인
+                //ReloedTimer += Time.deltaTime;
+                //if (ReloedTime <= ReloedTimer) 
+                //{
+                //    ChangePattern("Reloed");
+                //}
+
             }
             else
             {
                 agent.isStopped = true;
 
             }
-
-            // 패턴 발동 시도 → 공격 중 아닐 때는 항상 시도
-            // 여기에 탄막 코드하고 연동해야함
         }
         float speed = agent.velocity.magnitude;
         animator.SetFloat("Speed", speed);
@@ -60,13 +77,20 @@ public class PBR : Monster
     {
         switch (patternName)
         {
-            case "Slash":
+            case "Shoot":
                 currentParryThreshold = 1f;
                 ParryStatus = "Block";
+                shotCtrl.StartShotRoutine(); // 사격시작하는 코드
+                ReloedTimer += Time.deltaTime;
+                if (ReloedTime <= ReloedTimer)
+                {
+                    ChangePattern("Reload");
+                }
                 break;
-            case "CastSlash":
+            case "Reload":
                 currentParryThreshold = 2f;
                 ParryStatus = "Groggy";
+                shotCtrl._shooting = false; // 멈추는 코드
                 break;
         }
 

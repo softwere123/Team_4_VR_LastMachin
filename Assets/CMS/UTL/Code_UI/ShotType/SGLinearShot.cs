@@ -26,6 +26,7 @@ public class SGLinearShot : SGBaseShot
             return;
         }
         _shooting = true;
+        delayTimer = delayTime;
     }
 
     protected virtual void Update()
@@ -34,7 +35,6 @@ public class SGLinearShot : SGBaseShot
         {
             return;
         }
-        delayTimer = delayTime;
         delayTimer -= SGTimer.Instance.deltaTime;
 
         while (delayTimer < 0)
