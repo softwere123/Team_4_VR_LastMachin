@@ -4858,6 +4858,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2626390829600999225, guid: 779451906d8dd614095ae97111671f00,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2626390829600999225, guid: 779451906d8dd614095ae97111671f00,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2678990549340808820, guid: 779451906d8dd614095ae97111671f00,
         type: 3}
       propertyPath: m_IsActive
@@ -4902,7 +4912,7 @@ PrefabInstance:
         type: 3}
       propertyPath: radialPartCanvas
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1096067606}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -13730,6 +13740,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b519579c837b5341bb4b6e4c66af4e6, type: 3}
+--- !u!224 &1096067606 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2626390829600999225, guid: 779451906d8dd614095ae97111671f00,
+    type: 3}
+  m_PrefabInstance: {fileID: 433124153}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1116684058
 GameObject:
   m_ObjectHideFlags: 0
