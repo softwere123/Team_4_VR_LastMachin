@@ -92,10 +92,10 @@ public class RadialSelectiom : MonoBehaviour
 
     public void HideAndTriggerSelected() //선택된 이미지를 숨기고 이벤트를 발생시킨다
     {
-        
         OnPartSelected.Invoke(currentSelectedRadialPart); //이벤트를 발생시킨다
         radialPartCanvas.gameObject.SetActive(false); //이미지를 숨긴다
     }
+
     public void GetSelectedRadiaPart()
     {
         Vector3 centerToHand = handTransform.position - radialPartCanvas.position;
@@ -134,8 +134,8 @@ public class RadialSelectiom : MonoBehaviour
     public void SpawnedRadoalPart() //생성된 이미지를 라디우스 형태로 배치하는 함수
     {
         radialPartCanvas.gameObject.SetActive(true); //이미지를 보여준다
-                                                     //radialPartCanvas.rotation = handTransform.rotation; //손의 위치를 설정한다   
-                                                     //radialPartCanvas.position = handTransform.position; //손의 위치를 설정한다   
+                                                     //radialPartCanvas.rotation = handTransform.rotation; //손의 위치를 설정한다
+                                                     //radialPartCanvas.position = handTransform.position; //손의 위치를 설정한다
                                                      // 손의 위치만 따라가고
         radialPartCanvas.position = handTransform.position;
 
@@ -151,8 +151,8 @@ public class RadialSelectiom : MonoBehaviour
 
         for (int i = 0; i < numberOfRadialPart; i++) //이미지 갯수만큼 반복 즉 위에 넣은 숫자만큼 생성후 나눠주는 역활 예술적이군.
         {
-            float angle = -i * 360 / numberOfRadialPart - angleBetweenPart /2; //회전시킬 음식  //z 축으로 회전해 포이치문이 반대로간다 그걸 수정하려면 i-1로 바꾸면된다
-            Vector3 radialPartEulerAngle = new Vector3(0, 0, angle); // 회전 시킬음식 그릇 생성
+            float angle = i * 360 / numberOfRadialPart - angleBetweenPart /2; //회전시킬 음식  //z 축으로 회전해 포이치문이 반대로간다 그걸 수정하려면 i-1로 바꾸면된다
+            Vector3 radialPartEulerAngle = new Vector3(0, 0, angle + 60); // 회전 시킬음식 그릇 생성
 
             GameObject spawnedRadoalPart = Instantiate(radialPartPrefab, radialPartCanvas); // 음식 회전후 음식추가할 공장 생성 후 위치 그릇 지정
             spawnedRadoalPart.transform.position = radialPartCanvas.position;    //그릇의 위치
