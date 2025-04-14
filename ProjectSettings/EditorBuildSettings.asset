@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/A Last_Robot/CHG/Scene_HG/Playground_HG.unity
     guid: e9017d5f96b9f09489b4b37e1d6eb914
   - enabled: 0
-    path: Assets/A Last_Robot/Main/Scean/Demo/Demo Battle.unity
+    path: Assets/A Last_Robot/CMS/Demo Battle.unity
     guid: 24be9b91af962a3418d947459cfa1cba
   - enabled: 1
     path: Assets/A Last_Robot/A Last_Main/Scene/DemoAutoHand/S1 Demo.unity
