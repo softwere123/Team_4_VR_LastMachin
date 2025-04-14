@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b2c98194493acf45beb25a387a383b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 7567647966786925463, guid: 0af3ae2e475f0924d8e5b7cf706a1f8a,
+  projectilePrefab: {fileID: 9120461121998230352, guid: 88f1f4c6e1ce40345bd232b736caecca,
     type: 3}
   projectileNum: 10
   projectileSpeed: 2
@@ -86,3 +86,5 @@ MonoBehaviour:
   autoReleaseTime: 5
   angle: 180
   betweenDelay: 1
+  delayTimer: 0
+  delayTime: 0
