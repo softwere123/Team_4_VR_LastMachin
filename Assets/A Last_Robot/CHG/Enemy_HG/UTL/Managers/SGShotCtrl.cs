@@ -5,6 +5,20 @@ using UnityEngine;
 
 public class SGShotCtrl : MonoBehaviour
 {
+    // 외부에서 제어 가능한 프로퍼티
+    public bool Shooting
+    {
+        get => _shooting;
+        set
+        {
+            if (value)
+                StartShotRoutine();  // true일 때 탄막 시작
+            else
+                StopShot();          // false일 때 탄막 중지
+        }
+    }
+
+    // 내부에서 사용하는 실제 값
     public bool _shooting;
 
     public enum UpdateStep
@@ -118,14 +132,12 @@ public class SGShotCtrl : MonoBehaviour
 
         if (updateStep == UpdateStep.WaitDelay)
         {
-            // 설정한 afterDelay 만큼 대기
             if (nowShotInfo.afterDelay > 0 && nowShotInfo.afterDelay > delayTimer)
             {
                 delayTimer += deltaTime;
             }
             else
             {
-                // ❗ 수정됨: 더 이상 afterDelay를 0.1로 강제로 바꾸지 않음
                 delayTimer = 0f;
                 updateStep = UpdateStep.UpdateIndex;
             }
@@ -133,7 +145,6 @@ public class SGShotCtrl : MonoBehaviour
 
         if (updateStep == UpdateStep.UpdateIndex)
         {
-            // 다음 인덱스로 넘어가기
             if (loop || nowIndex < shotList.Count - 1)
             {
                 nowIndex = (int)Mathf.Repeat(nowIndex + 1f, shotList.Count);
@@ -147,7 +158,7 @@ public class SGShotCtrl : MonoBehaviour
 
         if (updateStep == UpdateStep.StartShot)
         {
-            UpdateShot(deltaTime); // 재귀 호출 (새 인덱스 기준으로 바로 발사)
+            UpdateShot(deltaTime); // 재귀 호출
         }
         else if (updateStep == UpdateStep.FinishShot)
         {
@@ -201,11 +212,9 @@ public class SGShotCtrl : MonoBehaviour
         _shooting = true;
         delayTimer = startDelay;
         updateStep = delayTimer > 0f ? UpdateStep.StartDelay : UpdateStep.StartShot;
-
         nowIndex = 0;
     }
 
-    // 필요 시 수동으로 정지시킬 수 있는 함수
     public void StopShot()
     {
         _shooting = false;
