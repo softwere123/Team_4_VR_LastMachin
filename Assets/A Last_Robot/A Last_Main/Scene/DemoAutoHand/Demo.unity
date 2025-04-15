@@ -86947,6 +86947,11 @@ PrefabInstance:
       propertyPath: rightPose.fingerPoses.Array.data[4].poseRelativeMatrix.Array.data[3].e23
       value: 0.00010008301
       objectReference: {fileID: 0}
+    - target: {fileID: 8382984234898838701, guid: 5e50eba45ef63694ab6dad66efcbb007,
+        type: 3}
+      propertyPath: m_TagString
+      value: Meteor
+      objectReference: {fileID: 0}
     - target: {fileID: 8804700766280832617, guid: 5e50eba45ef63694ab6dad66efcbb007,
         type: 3}
       propertyPath: leftPose.globalHandScale.x
