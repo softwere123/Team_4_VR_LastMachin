@@ -1016,7 +1016,7 @@ PrefabInstance:
     - target: {fileID: 4569373095596585180, guid: 38beb9809663f8445a243f3d84282247,
         type: 3}
       propertyPath: _initializePoolList.Array.data[0].initialPoolNum
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4569373095596585180, guid: 38beb9809663f8445a243f3d84282247,
         type: 3}
@@ -16162,13 +16162,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
         type: 3}
+      propertyPath: updateStep
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
+        type: 3}
       propertyPath: inheritAngle
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
         type: 3}
       propertyPath: shotList.Array.size
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
         type: 3}
@@ -16177,8 +16182,38 @@ PrefabInstance:
       objectReference: {fileID: 849471240}
     - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
         type: 3}
+      propertyPath: shotList.Array.data[1].shotObj
+      value: 
+      objectReference: {fileID: 849471240}
+    - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
+        type: 3}
+      propertyPath: shotList.Array.data[2].shotObj
+      value: 
+      objectReference: {fileID: 849471240}
+    - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
+        type: 3}
       propertyPath: shotList.Array.data[0].afterDelay
-      value: 1
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
+        type: 3}
+      propertyPath: shotList.Array.data[1].afterDelay
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
+        type: 3}
+      propertyPath: shotList.Array.data[2].afterDelay
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
+        type: 3}
+      propertyPath: shotList.Array.data[3].afterDelay
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
+        type: 3}
+      propertyPath: shotList.Array.data[4].afterDelay
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6182141680539617631, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
         type: 3}

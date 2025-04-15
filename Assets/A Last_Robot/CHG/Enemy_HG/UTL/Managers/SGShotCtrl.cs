@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 public class SGShotCtrl : MonoBehaviour
 {
@@ -20,25 +18,25 @@ public class SGShotCtrl : MonoBehaviour
 
     [Serializable]
     public class ShotInfo
-    {       
+    {
         public SGBaseShot shotObj;
         public float afterDelay = 0.1f;
     }
-    
-    public SGUtil.AXIS axisMove = SGUtil.AXIS.X_AND_Y;   
-    public bool inheritAngle = false;    
-    public bool startOnAwake = true;  
-    public float startOnAwakeDelay = 1f;   
-    public bool startOnEnable = false;   
-    public float startOnEnableDelay = 1f;   
-    public bool loop = true;  
+
+    public SGUtil.AXIS axisMove = SGUtil.AXIS.X_AND_Y;
+    public bool inheritAngle = false;
+    public bool startOnAwake = true;
+    public float startOnAwakeDelay = 1f;
+    public bool startOnEnable = false;
+    public float startOnEnableDelay = 1f;
+    public bool loop = true;
 
     public List<ShotInfo> shotList = new List<ShotInfo>();
-           
+
     public UpdateStep updateStep;
     private int nowIndex;
     private float delayTimer;
-  
+
     private bool isInitialized = false;
 
     private void Start()
@@ -48,9 +46,10 @@ public class SGShotCtrl : MonoBehaviour
             StartShotRoutine(startOnAwakeDelay);
         }
     }
+
     private void OnEnable()
     {
-        StartCoroutine(WaitForSingleton());     
+        StartCoroutine(WaitForSingleton());
     }
 
     private IEnumerator WaitForSingleton()
@@ -71,10 +70,10 @@ public class SGShotCtrl : MonoBehaviour
             StartShotRoutine(startOnEnableDelay);
         }
     }
+
     private void OnDestroy()
     {
         _shooting = false;
-
 
         if (Managers.ShotManager != null)
         {
@@ -84,10 +83,12 @@ public class SGShotCtrl : MonoBehaviour
 
     public void UpdateShot(float deltaTime)
     {
-         if (_shooting == false)
+        if (_shooting == false)
         {
             return;
         }
+
+        ShotInfo nowShotInfo = shotList[nowIndex];
 
         if (updateStep == UpdateStep.StartDelay)
         {
@@ -103,8 +104,6 @@ public class SGShotCtrl : MonoBehaviour
             }
         }
 
-        ShotInfo nowShotInfo = shotList[nowIndex];
-
         if (updateStep == UpdateStep.StartShot)
         {
             if (nowShotInfo.shotObj != null)
@@ -119,20 +118,22 @@ public class SGShotCtrl : MonoBehaviour
 
         if (updateStep == UpdateStep.WaitDelay)
         {
+            // ì„¤ì •í•œ afterDelay ë§Œí¼ ëŒ€ê¸°
             if (nowShotInfo.afterDelay > 0 && nowShotInfo.afterDelay > delayTimer)
             {
                 delayTimer += deltaTime;
             }
             else
             {
-                nowShotInfo.afterDelay = 0.1f;
+                // â— ìˆ˜ì •ë¨: ë” ì´ìƒ afterDelayë¥¼ 0.1ë¡œ ê°•ì œë¡œ ë°”ê¾¸ì§€ ì•ŠìŒ
                 delayTimer = 0f;
                 updateStep = UpdateStep.UpdateIndex;
             }
         }
 
         if (updateStep == UpdateStep.UpdateIndex)
-        {            
+        {
+            // ë‹¤ìŒ ì¸ë±ìŠ¤ë¡œ ë„˜ì–´ê°€ê¸°
             if (loop || nowIndex < shotList.Count - 1)
             {
                 nowIndex = (int)Mathf.Repeat(nowIndex + 1f, shotList.Count);
@@ -141,23 +142,23 @@ public class SGShotCtrl : MonoBehaviour
             else
             {
                 updateStep = UpdateStep.FinishShot;
-            }            
+            }
         }
 
         if (updateStep == UpdateStep.StartShot)
         {
-            UpdateShot(deltaTime);
+            UpdateShot(deltaTime); // ì¬ê·€ í˜¸ì¶œ (ìƒˆ ì¸ë±ìŠ¤ ê¸°ì¤€ìœ¼ë¡œ ë°”ë¡œ ë°œì‚¬)
         }
         else if (updateStep == UpdateStep.FinishShot)
         {
             _shooting = false;
         }
     }
+
     public void StartShotRoutine(float startDelay = 0f)
     {
         if (shotList == null || shotList.Count <= 0)
         {
-            //¼¦ ¸®½ºÆ®°¡ ºñ¾îÀÖÀ½
             return;
         }
 
@@ -172,7 +173,6 @@ public class SGShotCtrl : MonoBehaviour
         }
         if (enableShot == false)
         {
-            //¿ÀºêÁ§Æ® ¼ÂÆÃ ¾ÈµÊ
             return;
         }
 
@@ -189,22 +189,26 @@ public class SGShotCtrl : MonoBehaviour
             }
             if (enableDelay == false)
             {
-                //¼¦ ¸®½ºÆ® Á¦·Î
                 return;
             }
         }
 
         if (_shooting)
         {
-            //ÀÌ¹Ì ½ô
             return;
         }
 
         _shooting = true;
         delayTimer = startDelay;
         updateStep = delayTimer > 0f ? UpdateStep.StartDelay : UpdateStep.StartShot;
-       
+
         nowIndex = 0;
     }
 
+    // í•„ìš” ì‹œ ìˆ˜ë™ìœ¼ë¡œ ì •ì§€ì‹œí‚¬ ìˆ˜ ìˆëŠ” í•¨ìˆ˜
+    public void StopShot()
+    {
+        _shooting = false;
+        updateStep = UpdateStep.FinishShot;
+    }
 }
