@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// SG ì‹œìŠ¤í…œìš© íƒ„í™˜ í´ë˜ìŠ¤ - ê°œë³„ íƒ„í™˜ì˜ ì´ë™, ìë™ ì‚­ì œ, ì¶©ëŒ ì²˜ë¦¬ë¥¼ ë‹´ë‹¹
+/// </summary>
 public class SGProjectile : MonoBehaviour
 {
     private Transform transformCache;
@@ -44,6 +47,8 @@ public class SGProjectile : MonoBehaviour
 
     public float _DeadTimer = 30.0f;
     private float _DeadCheckTimer;
+
+    public int Damage = 10;
 
     private void Awake()
     {
@@ -107,21 +112,21 @@ public class SGProjectile : MonoBehaviour
         if (inheritAngle && this.parentBaseShot.lockOnShot == false)
         {
             if (this.axisMove == SGUtil.AXIS.X_AND_Z)
-            {                
+            {
                 baseAngle = this.parentBaseShot.shotCtrl.transform.eulerAngles.y;
             }
             else
-            {               
+            {
                 baseAngle = this.parentBaseShot.shotCtrl.transform.eulerAngles.z;
             }
         }
 
         if (this.axisMove == SGUtil.AXIS.X_AND_Z)
-        {           
+        {
             transformCache.SetEulerAnglesY(baseAngle - this.angle);
         }
         else
-        {           
+        {
             transformCache.SetEulerAnglesZ(baseAngle + this.angle);
         }
 
@@ -129,10 +134,11 @@ public class SGProjectile : MonoBehaviour
         selfTimeCount = 0f;
 
         if (_reserveReleaseOnShot)
-        {           
+        {
             SGObjectPool.Instance.ReleaseProjectile(this, _reserveReleaseOnShotIsDestroy);
         }
     }
+
     public void UpdateMove(float deltaTime)
     {
         if (shooting == false)
@@ -142,17 +148,17 @@ public class SGProjectile : MonoBehaviour
 
         selfTimeCount += deltaTime;
 
-        // ¿ÀÅä ¸±¸®Áî Ã¼Å©
+        // [1] ì‹œê°„ì´ ë‹¤ ë˜ë©´ ì˜¤í†  ë¦´ë¦¬ì¦ˆ
         if (useAutoRelease && autoReleaseTime > 0f)
         {
             if (selfTimeCount >= autoReleaseTime)
-            {              
+            {
                 SGObjectPool.Instance.ReleaseProjectile(this);
                 return;
             }
         }
 
-        // Á¤ÁöÇÏ°í ´Ù½Ã µ¹¾Æ°¥¶§ Ã¼Å·
+        // [2] ì¼ì‹œ ì •ì§€ ê¸°ëŠ¥ ì²˜ë¦¬
         if (pauseAndResume && pauseTime >= 0f && resumeTime > pauseTime)
         {
             if (pauseTime <= selfTimeCount && selfTimeCount < resumeTime)
@@ -166,46 +172,43 @@ public class SGProjectile : MonoBehaviour
         Quaternion newRotation = transformCache.rotation;
         if (homing)
         {
-            // È£¹Ö Å¸°Ù ¼³Á¤
             if (homingTarget != null && 0f < homingAngleSpeed)
             {
                 float rotAngle = SGUtil.GetAngleFromTwoPosition(transformCache, homingTarget, axisMove);
                 float myAngle = 0f;
                 if (axisMove == SGUtil.AXIS.X_AND_Z)
-                {                  
+                {
                     myAngle = -myAngles.y;
                 }
                 else
-                {                 
+                {
                     myAngle = myAngles.z;
                 }
 
                 float toAngle = Mathf.MoveTowardsAngle(myAngle, rotAngle, deltaTime * homingAngleSpeed);
 
                 if (axisMove == SGUtil.AXIS.X_AND_Z)
-                {                   
+                {
                     newRotation = Quaternion.Euler(myAngles.x, -toAngle, myAngles.z);
                 }
                 else
-                {                    
+                {
                     newRotation = Quaternion.Euler(myAngles.x, myAngles.y, toAngle);
                 }
             }
         }
         else if (sinWave)
         {
-            // ¿¢¼¿·¹ÀÌ¼Ç ¼³Á¤
             angle += (accelTurn * deltaTime);
-            // »çÀÎ ¿şÀÌºê
             if (0f < sinWaveSpeed && 0f < sinWaveRangeSize)
             {
                 float waveAngle = angle + (sinWaveRangeSize / 2f * (Mathf.Sin(selfFrameCnt * sinWaveSpeed / 100f) * (sinWaveInverse ? -1f : 1f)));
                 if (axisMove == SGUtil.AXIS.X_AND_Z)
-                {                   
+                {
                     newRotation = Quaternion.Euler(myAngles.x, baseAngle - waveAngle, myAngles.z);
                 }
                 else
-                {                   
+                {
                     newRotation = Quaternion.Euler(myAngles.x, myAngles.y, baseAngle + waveAngle);
                 }
             }
@@ -213,20 +216,17 @@ public class SGProjectile : MonoBehaviour
         }
         else
         {
-            // ¿¢¼¿·¹ÀÌ¼Ç ¼³Á¤
             float addAngle = accelTurn * deltaTime;
             if (axisMove == SGUtil.AXIS.X_AND_Z)
-            {               
+            {
                 newRotation = Quaternion.Euler(myAngles.x, myAngles.y - addAngle, myAngles.z);
             }
             else
             {
-                
                 newRotation = Quaternion.Euler(myAngles.x, myAngles.y, myAngles.z + addAngle);
             }
         }
 
-        // ¿¢¼¿·¹ÀÌ¼Ç ½ºÇÇµå ¼³Á¤
         speed += (accelSpeed * deltaTime);
 
         if (useMaxSpeed && speed > maxSpeed)
@@ -239,23 +239,19 @@ public class SGProjectile : MonoBehaviour
             speed = minSpeed;
         }
 
-        // ÀÌµ¿
         Vector3 newPosition;
         if (axisMove == SGUtil.AXIS.X_AND_Z)
         {
-            // X and Z axis
             newPosition = transformCache.position + (transformCache.forward * (speed * deltaTime));
         }
         else
         {
-            // X and Y axis
             newPosition = transformCache.position + (transformCache.up * (speed * deltaTime));
         }
 
-        // »õ·Î¿î Æ÷Áö¼Ç°ú ·ÎÅ×ÀÌ¼Ç ¼³Á¤
         transformCache.SetPositionAndRotation(newPosition, newRotation);
-      
     }
+
     public void OnFinishedShot()
     {
         if (shooting == false)
@@ -280,4 +276,31 @@ public class SGProjectile : MonoBehaviour
             SGObjectPool.Instance.ReleaseProjectile(this);
         }
     }
+
+    /// <summary>
+    /// í”Œë ˆì´ì–´ì™€ ì¶©ëŒ ì‹œ ì¦‰ì‹œ ì´ì•Œ ë°˜ë‚©
+    /// </summary>
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("ğŸ¯ ì´ì•Œì´ í”Œë ˆì´ì–´ì— ì¶©ëŒí–ˆìŠµë‹ˆë‹¤");
+
+            // ë¶€ëª¨ê¹Œì§€ í¬í•¨í•´ì„œ PlayerHealth_HG ì°¾ê¸°
+            PlayerHealth_HG playerHealth = other.GetComponentInParent<PlayerHealth_HG>();
+            if (playerHealth != null)
+            {
+                Debug.Log("âœ… PlayerHealth ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì•˜ìŠµë‹ˆë‹¤");
+                playerHealth.TakeDamage(10); // ì›í•˜ëŠ” ë°ë¯¸ì§€ë¡œ ì¡°ì ˆ
+            }
+            else
+            {
+                Debug.LogWarning("âŒ PlayerHealth_HG ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì§€ ëª»í–ˆìŠµë‹ˆë‹¤");
+            }
+
+            SGObjectPool.Instance.ReleaseProjectile(this);
+        }
+    }
+
+
 }

@@ -2,11 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 public class SGShotCtrl : MonoBehaviour
 {
+    // Ïô∏Î∂ÄÏóêÏÑú Ï†úÏñ¥ Í∞ÄÎä•Ìïú ÌîÑÎ°úÌçºÌã∞
+    public bool Shooting
+    {
+        get => _shooting;
+        set
+        {
+            if (value)
+                StartShotRoutine();  // trueÏùº Îïå ÌÉÑÎßâ ÏãúÏûë
+            else
+                StopShot();          // falseÏùº Îïå ÌÉÑÎßâ Ï§ëÏßÄ
+        }
+    }
+
+    // ÎÇ¥Î∂ÄÏóêÏÑú ÏÇ¨Ïö©ÌïòÎäî Ïã§Ï†ú Í∞í
     public bool _shooting;
 
     public enum UpdateStep
@@ -20,25 +32,25 @@ public class SGShotCtrl : MonoBehaviour
 
     [Serializable]
     public class ShotInfo
-    {       
+    {
         public SGBaseShot shotObj;
         public float afterDelay = 0.1f;
     }
-    
-    public SGUtil.AXIS axisMove = SGUtil.AXIS.X_AND_Y;   
-    public bool inheritAngle = false;    
-    public bool startOnAwake = true;  
-    public float startOnAwakeDelay = 1f;   
-    public bool startOnEnable = false;   
-    public float startOnEnableDelay = 1f;   
-    public bool loop = true;  
+
+    public SGUtil.AXIS axisMove = SGUtil.AXIS.X_AND_Y;
+    public bool inheritAngle = false;
+    public bool startOnAwake = true;
+    public float startOnAwakeDelay = 1f;
+    public bool startOnEnable = false;
+    public float startOnEnableDelay = 1f;
+    public bool loop = true;
 
     public List<ShotInfo> shotList = new List<ShotInfo>();
-           
+
     public UpdateStep updateStep;
     private int nowIndex;
     private float delayTimer;
-  
+
     private bool isInitialized = false;
 
     private void Start()
@@ -48,9 +60,10 @@ public class SGShotCtrl : MonoBehaviour
             StartShotRoutine(startOnAwakeDelay);
         }
     }
+
     private void OnEnable()
     {
-        StartCoroutine(WaitForSingleton());     
+        StartCoroutine(WaitForSingleton());
     }
 
     private IEnumerator WaitForSingleton()
@@ -71,10 +84,10 @@ public class SGShotCtrl : MonoBehaviour
             StartShotRoutine(startOnEnableDelay);
         }
     }
+
     private void OnDestroy()
     {
         _shooting = false;
-
 
         if (Managers.ShotManager != null)
         {
@@ -84,10 +97,12 @@ public class SGShotCtrl : MonoBehaviour
 
     public void UpdateShot(float deltaTime)
     {
-         if (_shooting == false)
+        if (_shooting == false)
         {
             return;
         }
+
+        ShotInfo nowShotInfo = shotList[nowIndex];
 
         if (updateStep == UpdateStep.StartDelay)
         {
@@ -102,8 +117,6 @@ public class SGShotCtrl : MonoBehaviour
                 updateStep = UpdateStep.StartShot;
             }
         }
-
-        ShotInfo nowShotInfo = shotList[nowIndex];
 
         if (updateStep == UpdateStep.StartShot)
         {
@@ -125,14 +138,13 @@ public class SGShotCtrl : MonoBehaviour
             }
             else
             {
-                nowShotInfo.afterDelay = 0.1f;
                 delayTimer = 0f;
                 updateStep = UpdateStep.UpdateIndex;
             }
         }
 
         if (updateStep == UpdateStep.UpdateIndex)
-        {            
+        {
             if (loop || nowIndex < shotList.Count - 1)
             {
                 nowIndex = (int)Mathf.Repeat(nowIndex + 1f, shotList.Count);
@@ -141,23 +153,23 @@ public class SGShotCtrl : MonoBehaviour
             else
             {
                 updateStep = UpdateStep.FinishShot;
-            }            
+            }
         }
 
         if (updateStep == UpdateStep.StartShot)
         {
-            UpdateShot(deltaTime);
+            UpdateShot(deltaTime); // Ïû¨Í∑Ä Ìò∏Ï∂ú
         }
         else if (updateStep == UpdateStep.FinishShot)
         {
             _shooting = false;
         }
     }
+
     public void StartShotRoutine(float startDelay = 0f)
     {
         if (shotList == null || shotList.Count <= 0)
         {
-            //º¶ ∏ÆΩ∫∆Æ∞° ∫ÒæÓ¿÷¿Ω
             return;
         }
 
@@ -172,7 +184,6 @@ public class SGShotCtrl : MonoBehaviour
         }
         if (enableShot == false)
         {
-            //ø¿∫Í¡ß∆Æ º¬∆√ æ»µ 
             return;
         }
 
@@ -189,22 +200,24 @@ public class SGShotCtrl : MonoBehaviour
             }
             if (enableDelay == false)
             {
-                //º¶ ∏ÆΩ∫∆Æ ¡¶∑Œ
                 return;
             }
         }
 
         if (_shooting)
         {
-            //¿ÃπÃ ΩÙ
             return;
         }
 
         _shooting = true;
         delayTimer = startDelay;
         updateStep = delayTimer > 0f ? UpdateStep.StartDelay : UpdateStep.StartShot;
-       
         nowIndex = 0;
     }
 
+    public void StopShot()
+    {
+        _shooting = false;
+        updateStep = UpdateStep.FinishShot;
+    }
 }
