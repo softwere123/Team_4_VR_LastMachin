@@ -9,8 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1464833005300749852}
-  - component: {fileID: 4518512025020262872}
-  - component: {fileID: 1244768586358465197}
+  - component: {fileID: 2741459629321880010}
   m_Layer: 0
   m_Name: SGLinearShot
   m_TagString: Untagged
@@ -33,31 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4518512025020262872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5783397134856229682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c64d94c8460dab489bd3112478b8167, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shooting: 0
-  axisMove: 0
-  inheritAngle: 0
-  startOnAwake: 1
-  startOnAwakeDelay: 1
-  startOnEnable: 0
-  startOnEnableDelay: 1
-  loop: 1
-  shotList:
-  - shotObj: {fileID: 1244768586358465197}
-    afterDelay: 1
-  updateStep: 0
---- !u!114 &1244768586358465197
+--- !u!114 &2741459629321880010
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,8 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b2c98194493acf45beb25a387a383b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 9120461121998230352, guid: 88f1f4c6e1ce40345bd232b736caecca,
-    type: 3}
+  projectilePrefab: {fileID: 0}
   projectileNum: 10
   projectileSpeed: 2
   accelerationSpeed: 0
@@ -82,9 +56,9 @@ MonoBehaviour:
   usePauseAndResume: 0
   pauseTime: 0
   resumeTime: 0
-  useAutoRelease: 1
-  autoReleaseTime: 5
+  useAutoRelease: 0
+  autoReleaseTime: 10
   angle: 180
-  betweenDelay: 1
+  betweenDelay: 0.1
   delayTimer: 0
   delayTime: 0

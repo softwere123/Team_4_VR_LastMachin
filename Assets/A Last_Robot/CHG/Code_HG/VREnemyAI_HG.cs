@@ -106,9 +106,7 @@ public class EnemyAI_HG : MonoBehaviour
         Debug.Log("[Enemy] 공격! 남은 탄약: " + currentAmmo);
         currentAmmo--;
         animator.SetTrigger("Shoot"); // 공격 애니메이션 트리거 발동
-
-
-        isAttacking = false;
+        // FireBullet()은 애니메이션 이벤트에서 실행됨
     }
 
     System.Collections.IEnumerator Reload()
@@ -148,14 +146,11 @@ public class EnemyAI_HG : MonoBehaviour
         Debug.Log("[Enemy] 사망!");
     }
 
-
- // 어택 애니메이션 이벤트에서 호출할 함수
-public void OnAttackEnd()
-{
-    // 공격 애니메이션이 끝난 후 다시 이동할 수 있도록 설정
-    isAttacking = false;
-    agent.isStopped = false;
+    // 어택 애니메이션 이벤트에서 호출할 함수
+    public void OnAttackEnd()
+    {
+        // 공격 애니메이션이 끝난 후 다시 이동할 수 있도록 설정
+        isAttacking = false;
+        agent.isStopped = false;
+    }
 }
-
-}
-
