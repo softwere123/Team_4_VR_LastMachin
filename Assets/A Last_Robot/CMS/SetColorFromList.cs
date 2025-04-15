@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class SetMaterialFromList : MonoBehaviour
 {
-    public List<Material> materials; // Material ∏ÆΩ∫∆Æ∑Œ ∫Ø∞Ê
+    public List<Material> materials; // Material Î¶¨Ïä§Ìä∏Î°ú Î≥ÄÍ≤Ω
 
     public void SetMaterial(int index)
     {
         if (index >= 0 && index < materials.Count && materials[index] != null)
         {
-            GetComponent<Renderer>().material = materials[index]; // Material ±≥√º
+            GetComponent<Renderer>().material = materials[index]; // Material ÍµêÏ≤¥
         }
         else
         {

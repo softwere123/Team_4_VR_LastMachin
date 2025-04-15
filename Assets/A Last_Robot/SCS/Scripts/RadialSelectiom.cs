@@ -39,7 +39,7 @@ public class RadialSelectiom : MonoBehaviour
     public CommonButton spawnButton = CommonButton.primaryButton; // 버튼을 눌렀는지 체크하는 변수
     private bool isSlowed = false;// 타임 스케일을 조절하기 위한 변수
     private bool soundPlayed = false; // 사운드가 재생되었는지 체크하는 변수
-    [Range(2 , 10)] //이미지 갯수 <범위 드래그 범위 설정
+    [Range(1 , 10)] //이미지 갯수 <범위 드래그 범위 설정
     public int numberOfRadialPart; //여기에 범위 설정된 숫자를 넣어준다 
     public GameObject radialPartPrefab;//생성할 이미지를 넣어준다 
     public Transform radialPartCanvas;  //이미지를 생성할 캔버스의 위치를 설정한다
