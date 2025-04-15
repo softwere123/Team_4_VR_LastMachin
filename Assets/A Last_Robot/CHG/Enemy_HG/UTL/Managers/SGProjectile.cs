@@ -48,6 +48,8 @@ public class SGProjectile : MonoBehaviour
     public float _DeadTimer = 30.0f;
     private float _DeadCheckTimer;
 
+    public int Damage = 10;
+
     private void Awake()
     {
         transformCache = transform;
@@ -280,13 +282,25 @@ public class SGProjectile : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter(Collider other)
     {
-        // "Player" 태그와 충돌한 경우만 처리
         if (other.CompareTag("Player"))
         {
-            // TODO: 여기에 플레이어 피격 처리 로직 넣기 (예: PlayerHealth.TakeDamage(damage);)
-            PlayerHealth_HG.TakeDamage(other);
-            // 즉시 총알 풀에 반납
+            Debug.Log("🎯 총알이 플레이어에 충돌했습니다");
+
+            // 부모까지 포함해서 PlayerHealth_HG 찾기
+            PlayerHealth_HG playerHealth = other.GetComponentInParent<PlayerHealth_HG>();
+            if (playerHealth != null)
+            {
+                Debug.Log("✅ PlayerHealth 컴포넌트를 찾았습니다");
+                playerHealth.TakeDamage(10); // 원하는 데미지로 조절
+            }
+            else
+            {
+                Debug.LogWarning("❌ PlayerHealth_HG 컴포넌트를 찾지 못했습니다");
+            }
+
             SGObjectPool.Instance.ReleaseProjectile(this);
         }
     }
+
+
 }
