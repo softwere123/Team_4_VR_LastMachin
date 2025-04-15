@@ -284,7 +284,7 @@ public class SGProjectile : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // TODO: 여기에 플레이어 피격 처리 로직 넣기 (예: PlayerHealth.TakeDamage(damage);)
-
+            PlayerHealth_HG.TakeDamage(other);
             // 즉시 총알 풀에 반납
             SGObjectPool.Instance.ReleaseProjectile(this);
         }
