@@ -8281,7 +8281,7 @@ PrefabInstance:
     - target: {fileID: 8269844766359449427, guid: 910177ec26b76c14996c2d53627a6def,
         type: 3}
       propertyPath: reloadTime
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8269844766359449427, guid: 910177ec26b76c14996c2d53627a6def,
         type: 3}
@@ -9631,7 +9631,7 @@ PrefabInstance:
     - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
         type: 3}
       propertyPath: shotList.Array.data[0].afterDelay
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6182141680539617631, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
         type: 3}
@@ -10411,7 +10411,7 @@ PrefabInstance:
     - target: {fileID: 1906938092331753465, guid: 3e84382cc3999304a81e990594338239,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.0644001
+      value: 2.58
       objectReference: {fileID: 0}
     - target: {fileID: 1906938092331753465, guid: 3e84382cc3999304a81e990594338239,
         type: 3}
@@ -20392,6 +20392,11 @@ PrefabInstance:
         type: 3}
       propertyPath: projectileNum
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119517543738617029, guid: e681044d29c59a043b854f798e36b4e5,
+        type: 3}
+      propertyPath: projectileSpeed
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3119517543738617029, guid: e681044d29c59a043b854f798e36b4e5,
         type: 3}
