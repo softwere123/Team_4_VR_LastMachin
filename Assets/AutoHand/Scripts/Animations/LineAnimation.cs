@@ -26,15 +26,23 @@ namespace Autohand
         GradientAlphaKey[] startAlphaKeys;
         Coroutine animationCoroutine;
 
-        private void Start() {
+        private void Start()
+        {
             startWidth = lineRenderer.widthMultiplier;
+            if (startWidth == 0)
+                startWidth = 0.05f;
+
             lineRenderer.widthMultiplier = 0;
 
             wasLineEnabled = lineRenderer.enabled;
-            if(lineReticle != null) {
+            if (lineReticle != null)
+            {
                 startReticleScale = lineReticle.transform.localScale;
                 lineReticle.transform.localScale = Vector3.zero;
             }
+
+            // 👉 무조건 활성화 시도. 조건은 코루틴 안에서 처리되니 부담 없음.
+            Activate();
         }
 
         private void OnDisable() {
