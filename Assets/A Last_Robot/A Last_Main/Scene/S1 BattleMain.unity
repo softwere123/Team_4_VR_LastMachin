@@ -8113,6 +8113,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1311519295150787614, guid: 910177ec26b76c14996c2d53627a6def,
+        type: 3}
+      propertyPath: useAutoRelease
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5661286142924696419, guid: 910177ec26b76c14996c2d53627a6def,
+        type: 3}
+      propertyPath: _initializePoolList.Array.data[0].initialPoolNum
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7072444061591351794, guid: 910177ec26b76c14996c2d53627a6def,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8171,7 +8181,7 @@ PrefabInstance:
     - target: {fileID: 7760973022774359195, guid: 910177ec26b76c14996c2d53627a6def,
         type: 3}
       propertyPath: loop
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7760973022774359195, guid: 910177ec26b76c14996c2d53627a6def,
         type: 3}
