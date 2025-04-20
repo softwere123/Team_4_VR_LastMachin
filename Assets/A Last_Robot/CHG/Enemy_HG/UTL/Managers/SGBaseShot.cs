@@ -24,7 +24,8 @@ public abstract class SGBaseShot : MonoBehaviour
 
     protected bool _shooting;
 
-    private SGShotCtrl _shotCtrl;
+    // SGBaseShot.cs ë‚´ì— ìˆëŠ” ë¶€ë¶„
+    protected SGShotCtrl _shotCtrl;
 
     public SGShotCtrl shotCtrl
     {
@@ -61,7 +62,7 @@ public abstract class SGBaseShot : MonoBehaviour
     {
         if (projectilePrefab == null)
         {
-            //ºí¸´Ç®¿¡ ¹®Á¦ ÀÖÀ½
+            //ë¸”ë¦¿í’€ì— ë¬¸ì œ ìˆìŒ
             return null;
         }
 
