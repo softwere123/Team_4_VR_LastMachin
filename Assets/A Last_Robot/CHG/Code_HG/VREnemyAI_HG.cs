@@ -35,6 +35,12 @@ public class VREnemyAI_HG : MonoBehaviour
 
         currentHealth = maxHealth;
         ammo = maxAmmo;
+
+        // 발사 콜백 등록
+        if (shotCtrl != null)
+        {
+            shotCtrl.onProjectileFired += HandleProjectileFired;
+        }
     }
 
     void Update()
@@ -74,17 +80,10 @@ public class VREnemyAI_HG : MonoBehaviour
                 animator.SetBool("isAttacking", true);
                 agent.isStopped = true;
 
+                // ✅ 한 번만 발사 트리거 (중복 방지)
                 if (!shotCtrl._shooting)
                 {
                     shotCtrl.Shooting = true;
-
-                    ammo--;
-                    Debug.Log("🔥 공격! 남은 탄약: " + ammo);
-
-                    if (ammo <= 0)
-                    {
-                        StartCoroutine(ReloadRoutine());
-                    }
                 }
             }
             else
@@ -103,14 +102,27 @@ public class VREnemyAI_HG : MonoBehaviour
     }
 
     /// <summary>
-    /// 🔄 장전 루틴: 장전 시간 대기 후 탄약 회복 및 상태 재설정
+    /// ✅ 탄환 발사 시 호출됨 (SGLinearShot_HG에서 콜백 실행)
+    /// </summary>
+    private void HandleProjectileFired()
+    {
+        ammo--;
+        Debug.Log("💣 탄 발사됨! 남은 탄약: " + ammo);
+
+        if (ammo <= 0)
+        {
+            StartCoroutine(ReloadRoutine());
+        }
+    }
+
+    /// <summary>
+    /// ⏳ 장전 루틴
     /// </summary>
     IEnumerator ReloadRoutine()
     {
         isReloading = true;
         shotCtrl.Shooting = false;
         animator.SetBool("isReloading", true);
-
         Debug.Log("🔄 장전 중...");
 
         yield return new WaitForSeconds(reloadTime);
@@ -118,32 +130,7 @@ public class VREnemyAI_HG : MonoBehaviour
         ammo = maxAmmo;
         isReloading = false;
         animator.SetBool("isReloading", false);
-
-        // ✅ Reload 애니메이션을 강제로 끝까지 재생 (상태 고정 방지)
-        animator.Play("Reload", 0, 1);
-
-        // ✅ 현재 상황에 따라 다시 상태 설정
-        float distance = Vector3.Distance(player.position, transform.position);
-
-        if (distance <= attackRange)
-        {
-            animator.SetBool("isAttacking", true);
-            animator.SetBool("isChasing", true);
-            Debug.Log("🔁 Reload → Attack");
-        }
-        else if (distance <= detectRange)
-        {
-            animator.SetBool("isAttacking", false);
-            animator.SetBool("isChasing", true);
-            Debug.Log("🔁 Reload → Chase");
-        }
-        else
-        {
-            animator.SetBool("isAttacking", false);
-            animator.SetBool("isChasing", false);
-            animator.SetBool("isReturning", true);
-            Debug.Log("🔁 Reload → Return");
-        }
+        Debug.Log("✅ 장전 완료! 탄약: " + ammo);
     }
 
     /// <summary>
@@ -154,7 +141,7 @@ public class VREnemyAI_HG : MonoBehaviour
         if (isDead) return;
 
         currentHealth -= amount;
-        Debug.Log("💥 피해 입음! 현재 체력: " + currentHealth);
+        Debug.Log("🔥 피해 입음! 현재 체력: " + currentHealth);
 
         if (currentHealth <= 0)
         {
@@ -168,23 +155,20 @@ public class VREnemyAI_HG : MonoBehaviour
     private void Die()
     {
         isDead = true;
-
         animator.SetBool("isDead", true);
         shotCtrl.Shooting = false;
         agent.isStopped = true;
-
-        Debug.Log("☠️ 적 사망!");
+        Debug.Log("💀 적 사망");
 
         StartCoroutine(DieCleanup());
     }
 
-    /// <summary>
-    /// 🧼 사망 후 제거
-    /// </summary>
     IEnumerator DieCleanup()
     {
         yield return new WaitForSeconds(5f);
         gameObject.SetActive(false);
     }
 }
+
+
 
