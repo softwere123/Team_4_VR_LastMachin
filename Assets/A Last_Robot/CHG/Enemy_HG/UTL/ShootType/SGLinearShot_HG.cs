@@ -9,7 +9,7 @@ public class SGLinearShot_HG : SGBaseShot
     {
         if (projectileNum <= 0 || projectilePrefab == null)
         {
-            return; // 설정이 잘못됨
+            return;
         }
 
         _shooting = true;
@@ -20,27 +20,37 @@ public class SGLinearShot_HG : SGBaseShot
             SGProjectile projectile = GetProjectile(transform.position);
             if (projectile == null)
             {
-                continue; // 풀에서 가져오기 실패
+                continue;
             }
 
-            // 각도 없이 직선 발사
             float angle = 0f;
 
-            // 탄환 발사 (호밍/사인웨이브 등 옵션은 모두 비활성화)
+            // 탄환 발사
             ShotProjectile(
                 projectile,
                 projectileSpeed,
                 angle,
                 false, // homing
                 null,
-                0f,    // homingAngleSpeed
-                false, // sinWave
-                0f, 0f, false // sinWave params
+                0f,
+                false,
+                0f, 0f, false
             );
+
+            // ✅ 콜백을 여기서 정확히 호출
+            if (_shotCtrl != null)
+            {
+                _shotCtrl.onProjectileFired?.Invoke();
+                Debug.Log("💣 탄환 실제 발사됨 - 콜백 호출 성공");
+            }
+            else
+            {
+                Debug.LogWarning("❌ _shotCtrl가 null이라 콜백 호출 실패!");
+            }
         }
 
-        // 발사 완료 처리
         FiredShot();
         FinishedShot();
     }
 }
+

@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class SGShotCtrl : MonoBehaviour
 {
-    // 외부에서 제어 가능한 프로퍼티
+    public System.Action onProjectileFired;
+
     public bool Shooting
     {
         get => _shooting;
@@ -18,7 +19,6 @@ public class SGShotCtrl : MonoBehaviour
         }
     }
 
-    // 내부에서 사용하는 실제 값
     public bool _shooting;
 
     public enum UpdateStep
@@ -95,6 +95,14 @@ public class SGShotCtrl : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// ✅ 매 프레임 탄막 실행 루프
+    /// </summary>
+    private void Update()
+    {
+        UpdateShot(Time.deltaTime); // 🔁 탄막 로직 실행
+    }
+
     public void UpdateShot(float deltaTime)
     {
         if (_shooting == false)
@@ -122,8 +130,8 @@ public class SGShotCtrl : MonoBehaviour
         {
             if (nowShotInfo.shotObj != null)
             {
-                nowShotInfo.shotObj.SetShotCtrl(this);
-                nowShotInfo.shotObj.Shot();
+                nowShotInfo.shotObj.SetShotCtrl(this); // ✅ SGBaseShot에 SGShotCtrl 연결
+                nowShotInfo.shotObj.Shot();            // 🔫 발사
             }
 
             delayTimer = 0f;
@@ -182,32 +190,23 @@ public class SGShotCtrl : MonoBehaviour
                 break;
             }
         }
-        if (enableShot == false)
-        {
-            return;
-        }
+        if (!enableShot) return;
 
         if (loop)
         {
             bool enableDelay = false;
             for (int i = 0; i < shotList.Count; i++)
             {
-                if (0f < shotList[i].afterDelay)
+                if (shotList[i].afterDelay > 0f)
                 {
                     enableDelay = true;
                     break;
                 }
             }
-            if (enableDelay == false)
-            {
-                return;
-            }
+            if (!enableDelay) return;
         }
 
-        if (_shooting)
-        {
-            return;
-        }
+        if (_shooting) return;
 
         _shooting = true;
         delayTimer = startDelay;
@@ -221,3 +220,4 @@ public class SGShotCtrl : MonoBehaviour
         updateStep = UpdateStep.FinishShot;
     }
 }
+
