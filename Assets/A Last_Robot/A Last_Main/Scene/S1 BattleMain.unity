@@ -6599,6 +6599,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 898921322}
+  - {fileID: 843053803}
   m_Father: {fileID: 2141873344}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &708284984
@@ -7976,7 +7977,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 366894066}
@@ -7992,7 +7993,7 @@ Transform:
   - {fileID: 1394162998}
   - {fileID: 662181277}
   - {fileID: 554949509}
-  m_Father: {fileID: 2141873344}
+  m_Father: {fileID: 703439405}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &851274027
 PrefabInstance:
@@ -8065,7 +8066,7 @@ PrefabInstance:
     - target: {fileID: 4569373095596585180, guid: 38beb9809663f8445a243f3d84282247,
         type: 3}
       propertyPath: _initializePoolList.Array.data[0].initialPoolNum
-      value: 30
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4569373095596585180, guid: 38beb9809663f8445a243f3d84282247,
         type: 3}
@@ -8309,6 +8310,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8269844766359449427, guid: 910177ec26b76c14996c2d53627a6def,
         type: 3}
+      propertyPath: attackCooldown
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8269844766359449427, guid: 910177ec26b76c14996c2d53627a6def,
+        type: 3}
       propertyPath: detectionRange
       value: 17
       objectReference: {fileID: 0}
@@ -8330,12 +8336,12 @@ PrefabInstance:
       addedObject: {fileID: 878219262}
     - targetCorrespondingSourceObject: {fileID: 7072444061591711186, guid: 910177ec26b76c14996c2d53627a6def,
         type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 878219266}
+      insertIndex: 3
+      addedObject: {fileID: 878219268}
     - targetCorrespondingSourceObject: {fileID: 7072444061591711186, guid: 910177ec26b76c14996c2d53627a6def,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 878219268}
+      addedObject: {fileID: 878219266}
     - targetCorrespondingSourceObject: {fileID: 7072444061591711186, guid: 910177ec26b76c14996c2d53627a6def,
         type: 3}
       insertIndex: -1
@@ -8417,7 +8423,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 5
+  MinDistance: 3.153839
   MaxDistance: 40
   Pan2D: 0
   rolloffMode: 0
@@ -9776,7 +9782,7 @@ PrefabInstance:
     - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
         type: 3}
       propertyPath: shotList.Array.data[0].afterDelay
-      value: 0.5
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6182141680539617631, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
         type: 3}
@@ -17335,7 +17341,7 @@ PrefabInstance:
     - target: {fileID: 1906938092331753465, guid: 3e84382cc3999304a81e990594338239,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.9
+      value: -7.55
       objectReference: {fileID: 0}
     - target: {fileID: 1906938092331753465, guid: 3e84382cc3999304a81e990594338239,
         type: 3}
@@ -17345,7 +17351,7 @@ PrefabInstance:
     - target: {fileID: 1906938092331753465, guid: 3e84382cc3999304a81e990594338239,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13.94
+      value: -7.74
       objectReference: {fileID: 0}
     - target: {fileID: 1906938092331753465, guid: 3e84382cc3999304a81e990594338239,
         type: 3}
@@ -20425,7 +20431,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 612303917}
-  - {fileID: 843053803}
   - {fileID: 703439405}
   - {fileID: 1979518735}
   m_Father: {fileID: 1428061500}
