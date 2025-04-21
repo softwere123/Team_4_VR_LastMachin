@@ -109,7 +109,7 @@ NavMeshSettings:
     serializedVersion: 3
     agentTypeID: 0
     agentRadius: 0.5
-    agentHeight: 2
+    agentHeight: 0.6
     agentSlope: 45
     agentClimb: 0.4
     ledgeDropHeight: 0
@@ -124,7 +124,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: d705bd0e88c074f4b8ef7d2c38764bb0, type: 2}
 --- !u!1 &3209136
 GameObject:
   m_ObjectHideFlags: 0
@@ -1067,7 +1067,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &169890556
 Transform:
@@ -2036,6 +2036,10 @@ PrefabInstance:
     - target: {fileID: 115042, guid: 154c5ce6106a9434588b06232e4b60f8, type: 3}
       propertyPath: m_Name
       value: Corridor_I Battle (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 164350, guid: 154c5ce6106a9434588b06232e4b60f8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 464552, guid: 154c5ce6106a9434588b06232e4b60f8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3545,17 +3549,17 @@ PrefabInstance:
     - target: {fileID: 3525604386790356706, guid: 779451906d8dd614095ae97111671f00,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3713582153326055517, guid: 779451906d8dd614095ae97111671f00,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3713582153326055517, guid: 779451906d8dd614095ae97111671f00,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8118,6 +8122,21 @@ PrefabInstance:
       propertyPath: useAutoRelease
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1311519295150787614, guid: 910177ec26b76c14996c2d53627a6def,
+        type: 3}
+      propertyPath: autoReleaseTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311519295150787614, guid: 910177ec26b76c14996c2d53627a6def,
+        type: 3}
+      propertyPath: projectileSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3760580343586394835, guid: 910177ec26b76c14996c2d53627a6def,
+        type: 3}
+      propertyPath: m_deltaTimeType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5661286142924696419, guid: 910177ec26b76c14996c2d53627a6def,
         type: 3}
       propertyPath: _initializePoolList.Array.data[0].initialPoolNum
@@ -8186,12 +8205,17 @@ PrefabInstance:
     - target: {fileID: 7760973022774359195, guid: 910177ec26b76c14996c2d53627a6def,
         type: 3}
       propertyPath: _shooting
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760973022774359195, guid: 910177ec26b76c14996c2d53627a6def,
+        type: 3}
+      propertyPath: updateStep
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7760973022774359195, guid: 910177ec26b76c14996c2d53627a6def,
         type: 3}
       propertyPath: inheritAngle
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7760973022774359195, guid: 910177ec26b76c14996c2d53627a6def,
         type: 3}
@@ -8207,7 +8231,7 @@ PrefabInstance:
         type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 1329104162}
+      objectReference: {fileID: 1691008506}
     - target: {fileID: 9060367660167007019, guid: 910177ec26b76c14996c2d53627a6def,
         type: 3}
       propertyPath: maxAmmo
@@ -8215,14 +8239,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9060367660167007019, guid: 910177ec26b76c14996c2d53627a6def,
         type: 3}
+      propertyPath: reloadTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9060367660167007019, guid: 910177ec26b76c14996c2d53627a6def,
+        type: 3}
       propertyPath: attackRange
-      value: 10
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9060367660167007019, guid: 910177ec26b76c14996c2d53627a6def,
+        type: 3}
+      propertyPath: detectRange
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 9060367660167007019, guid: 910177ec26b76c14996c2d53627a6def,
         type: 3}
       propertyPath: homePosition
       value: 
       objectReference: {fileID: 1714801286}
+    - target: {fileID: 9060367660167007019, guid: 910177ec26b76c14996c2d53627a6def,
+        type: 3}
+      propertyPath: maxChaseDistance
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11804,6 +11843,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Corridor_I Battle (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 164350, guid: 154c5ce6106a9434588b06232e4b60f8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 464552, guid: 154c5ce6106a9434588b06232e4b60f8, type: 3}
       propertyPath: m_LocalScale.y
       value: 2.7908
@@ -14388,12 +14431,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1313133742}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1329104162 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 141571107059505220, guid: 779451906d8dd614095ae97111671f00,
-    type: 3}
-  m_PrefabInstance: {fileID: 433124153}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1358058214
 GameObject:
   m_ObjectHideFlags: 0
@@ -16867,7 +16904,7 @@ PrefabInstance:
     - target: {fileID: 301230551107954808, guid: 3e84382cc3999304a81e990594338239,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 301230551107954808, guid: 3e84382cc3999304a81e990594338239,
         type: 3}
@@ -16943,6 +16980,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1645750546}
   m_SourcePrefab: {fileID: 100100000, guid: 3e84382cc3999304a81e990594338239, type: 3}
+--- !u!4 &1691008506 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6220975582387026837, guid: 3e84382cc3999304a81e990594338239,
+    type: 3}
+  m_PrefabInstance: {fileID: 1691008505}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1711407654
 PrefabInstance:
   m_ObjectHideFlags: 0
