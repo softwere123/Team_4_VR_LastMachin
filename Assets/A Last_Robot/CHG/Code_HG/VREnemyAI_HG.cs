@@ -36,7 +36,7 @@ public class VREnemyAI_HG : MonoBehaviour
         currentHealth = maxHealth;
         ammo = maxAmmo;
 
-        // 탄 발사 이벤트 등록
+        // 탄 발사 시 콜백 등록
         shotCtrl.onProjectileFired += HandleProjectileFired;
     }
 
@@ -49,14 +49,14 @@ public class VREnemyAI_HG : MonoBehaviour
         bool inAttackRange = distance <= attackRange;
         bool isTooFar = distance > maxChaseDistance;
 
-        // 🛑 장전 중이면 공격 외의 행동 중지
+        // 🔄 장전 중이면 공격 외 동작 정지
         if (isReloading)
         {
             animator.SetBool("isReloading", true);
             return;
         }
 
-        // ⏪ 너무 멀어지면 복귀
+        // 🔁 너무 멀어지면 복귀
         if (isTooFar)
         {
             animator.SetBool("isReturning", true);
@@ -64,7 +64,6 @@ public class VREnemyAI_HG : MonoBehaviour
             animator.SetBool("isAttacking", false);
             shotCtrl.Shooting = false;
 
-            // ✅ 복귀 위치로 이동
             if (!agent.pathPending && agent.destination != homePosition.position)
             {
                 agent.isStopped = false;
@@ -80,7 +79,7 @@ public class VREnemyAI_HG : MonoBehaviour
         // 👀 플레이어가 감지되었을 때
         if (isPlayerVisible)
         {
-            // ✅ 목적지가 바뀌었을 때만 재설정
+            // ✅ 목적지가 다르면 재지정
             if (!agent.pathPending && agent.destination != player.position)
             {
                 agent.isStopped = false;
@@ -93,7 +92,16 @@ public class VREnemyAI_HG : MonoBehaviour
             if (inAttackRange)
             {
                 animator.SetBool("isAttacking", true);
-                agent.isStopped = true; // 공격 시 정지
+                agent.isStopped = true; // 공격 중 정지
+
+                // ✅ 공격 중일 때 플레이어 방향으로 회전
+                Vector3 direction = (player.position - transform.position).normalized;
+                direction.y = 0f; // 수평 회전만
+                if (direction != Vector3.zero)
+                {
+                    Quaternion lookRotation = Quaternion.LookRotation(direction);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f); // 부드러운 회전
+                }
 
                 if (!shotCtrl._shooting && ammo > 0)
                 {
@@ -105,6 +113,12 @@ public class VREnemyAI_HG : MonoBehaviour
                 animator.SetBool("isAttacking", false);
                 shotCtrl.Shooting = false;
                 agent.isStopped = false;
+
+                // 추적 위치 갱신
+                if (!agent.pathPending && agent.destination != player.position)
+                {
+                    agent.SetDestination(player.position);
+                }
             }
         }
         else
@@ -116,7 +130,7 @@ public class VREnemyAI_HG : MonoBehaviour
     }
 
     /// <summary>
-    /// 💣 탄 발사 이벤트 핸들링
+    /// 💥 탄 발사 시 콜백 처리
     /// </summary>
     void HandleProjectileFired()
     {
@@ -132,7 +146,7 @@ public class VREnemyAI_HG : MonoBehaviour
     }
 
     /// <summary>
-    /// 🔁 장전 처리 루틴
+    /// ⏳ 장전 루틴
     /// </summary>
     IEnumerator ReloadRoutine()
     {
@@ -152,7 +166,7 @@ public class VREnemyAI_HG : MonoBehaviour
     }
 
     /// <summary>
-    /// 💥 피해 처리
+    /// 💢 피해 처리
     /// </summary>
     public void TakeDamage(int amount)
     {
@@ -184,7 +198,7 @@ public class VREnemyAI_HG : MonoBehaviour
     }
 
     /// <summary>
-    /// 🧼 사망 후 비활성화
+    /// 🧼 사망 후 일정 시간 뒤 비활성화
     /// </summary>
     IEnumerator DieCleanup()
     {
@@ -192,6 +206,8 @@ public class VREnemyAI_HG : MonoBehaviour
         gameObject.SetActive(false);
     }
 }
+
+
 
 
 

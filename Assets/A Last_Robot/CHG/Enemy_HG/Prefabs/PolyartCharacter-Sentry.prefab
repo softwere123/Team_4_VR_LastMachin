@@ -1768,11 +1768,11 @@ GameObject:
   - component: {fileID: 7072444061582351952}
   - component: {fileID: 703581458082139888}
   - component: {fileID: 749955030258717116}
-  - component: {fileID: 9060367660167007019}
+  - component: {fileID: -2283948931964238436}
   - component: {fileID: 5156907161214181762}
   - component: {fileID: 95588714951815740}
   m_Layer: 0
-  m_Name: PolyartCharacter
+  m_Name: PolyartCharacter-Sentry
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1940,7 +1940,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &9060367660167007019
+--- !u!114 &-2283948931964238436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1949,15 +1949,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7072444061591711186}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9df08cd36071b8342b5be1aecbd4cc0f, type: 3}
+  m_Script: {fileID: 11500000, guid: ff798196bd6c7bb41930072f4c32f9fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  homePosition: {fileID: 0}
   detectRange: 15
-  attackRange: 5
-  maxChaseDistance: 25
-  maxAmmo: 10
+  attackRange: 8
+  maxAmmo: 7
+  reloadTime: 2.5
 --- !u!114 &5156907161214181762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3060,6 +3059,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3119517543738617029, guid: e681044d29c59a043b854f798e36b4e5,
         type: 3}
+      propertyPath: useAutoRelease
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119517543738617029, guid: e681044d29c59a043b854f798e36b4e5,
+        type: 3}
       propertyPath: projectileSpeed
       value: 5
       objectReference: {fileID: 0}
@@ -3113,7 +3117,7 @@ PrefabInstance:
     - target: {fileID: 5431571417107342755, guid: 40fac0aaeab7cdc4da8ac93a08797915,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.45002842
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 5431571417107342755, guid: 40fac0aaeab7cdc4da8ac93a08797915,
         type: 3}
@@ -3186,6 +3190,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
         type: 3}
+      propertyPath: loop
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
+        type: 3}
       propertyPath: axisMove
       value: 1
       objectReference: {fileID: 0}
@@ -3193,6 +3202,11 @@ PrefabInstance:
         type: 3}
       propertyPath: inheritAngle
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
+        type: 3}
+      propertyPath: startOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
         type: 3}
@@ -3207,7 +3221,7 @@ PrefabInstance:
     - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
         type: 3}
       propertyPath: shotList.Array.data[0].afterDelay
-      value: 1.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6182141680539617631, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
         type: 3}
@@ -3353,7 +3367,7 @@ PrefabInstance:
     - target: {fileID: 4569373095596585180, guid: 38beb9809663f8445a243f3d84282247,
         type: 3}
       propertyPath: _initializePoolList.Array.data[0].initialPoolNum
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4569373095596585180, guid: 38beb9809663f8445a243f3d84282247,
         type: 3}
