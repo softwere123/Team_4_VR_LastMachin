@@ -43,7 +43,7 @@ public class SGShotCtrl : MonoBehaviour
     public float startOnAwakeDelay = 1f;
     public bool startOnEnable = false;
     public float startOnEnableDelay = 1f;
-    public bool loop = true;
+    public bool loop = false;
 
     public List<ShotInfo> shotList = new List<ShotInfo>();
 
