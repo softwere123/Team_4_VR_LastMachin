@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Autohand.Demo;
+using Autohand;
 using UnityEngine;
+
 
 /// <summary>
 /// SG 시스템용 탄환 클래스 - 개별 탄환의 이동, 자동 삭제, 충돌 처리를 담당
@@ -50,6 +53,10 @@ public class SGProjectile : MonoBehaviour
 
     public int Damage = 10;
 
+    public XRHandControllerLink xrHand;
+    public Hand hand;
+
+
     private void Awake()
     {
         transformCache = transform;
@@ -58,7 +65,13 @@ public class SGProjectile : MonoBehaviour
 
     public virtual void SetActive(bool isActive)
     {
-        gameObject.SetActive(isActive);
+        if (hand.IsGrabbing())
+        {
+            hand.Release();   // ForceRelease 대신 Release 사용
+        }
+
+        gameObject.SetActive(false);
+
     }
 
     public void Update()

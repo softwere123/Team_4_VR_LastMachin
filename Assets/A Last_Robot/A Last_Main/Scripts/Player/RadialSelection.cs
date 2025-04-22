@@ -10,7 +10,7 @@ using Autohand.Demo;
 /// <summary>
 /// 손의 위치에 따라 방사형 UI를 생성하고 선택하는 기능을 제공하는 클래스입니다.
 /// </summary>
-public class RadialSelectiom : MonoBehaviour
+public class RadialSelection : MonoBehaviour
 {
     private XRHandControllerLink handController; // 손 컨트롤러 입력을 위한 링크
     public AudioSource radialSound;              // 사운드 재생용 오디오 소스
