@@ -1768,9 +1768,6 @@ GameObject:
   - component: {fileID: 7072444061582351952}
   - component: {fileID: 703581458082139888}
   - component: {fileID: 749955030258717116}
-  - component: {fileID: 9060367660167007019}
-  - component: {fileID: 5156907161214181762}
-  - component: {fileID: 95588714951815740}
   m_Layer: 0
   m_Name: PolyartCharacter-Guard
   m_TagString: Enemy
@@ -1940,67 +1937,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &9060367660167007019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7072444061591711186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9df08cd36071b8342b5be1aecbd4cc0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  homePosition: {fileID: 847377198616826933}
-  detectRange: 15
-  attackRange: 10
-  maxChaseDistance: 17
-  maxAmmo: 7
-  reloadTime: 2.5
-  maxHealth: 100
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!114 &5156907161214181762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7072444061591711186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd6c7dd543c07544d92b0baf60b17b43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 7072444061582351952}
-  shotCtrl: {fileID: 7760973022774359195}
-  attackStateName: Attack
-  reloadStateName: Reload
---- !u!114 &95588714951815740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7072444061591711186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3dd22b0f965f1e4c9f1d11eda2ba86e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  idleClip: {fileID: 8300000, guid: 704d98cae25f8b54fa0b0bb63da1fbdd, type: 3}
-  walkClip: {fileID: 8300000, guid: ceaa6c9077e544848ba22218ed72c560, type: 3}
-  runClip: {fileID: 8300000, guid: 1243d6b0e01cd1a46a18782e5c1a32e4, type: 3}
-  attackClip: {fileID: 8300000, guid: 2375721b37e7ea746befb72503399fbe, type: 3}
-  reloadClip: {fileID: 8300000, guid: c11477e054dfe1f4187b92cff4b766f5, type: 3}
-  dieClip: {fileID: 0}
 --- !u!1 &7072444061591711188
 GameObject:
   m_ObjectHideFlags: 0
@@ -3294,18 +3230,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5068541954943450715}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7760973022774359195 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
-    type: 3}
-  m_PrefabInstance: {fileID: 5068541954943450715}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c64d94c8460dab489bd3112478b8167, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8212667269107211199
 PrefabInstance:
   m_ObjectHideFlags: 0

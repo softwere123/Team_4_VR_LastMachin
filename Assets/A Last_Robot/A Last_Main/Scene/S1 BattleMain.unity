@@ -570,8 +570,94 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7072444061591711186, guid: 910177ec26b76c14996c2d53627a6def,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 54898586}
+    - targetCorrespondingSourceObject: {fileID: 7072444061591711186, guid: 910177ec26b76c14996c2d53627a6def,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 54898585}
+    - targetCorrespondingSourceObject: {fileID: 7072444061591711186, guid: 910177ec26b76c14996c2d53627a6def,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 54898584}
   m_SourcePrefab: {fileID: 100100000, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
+--- !u!1 &54898582 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7072444061591711186, guid: 910177ec26b76c14996c2d53627a6def,
+    type: 3}
+  m_PrefabInstance: {fileID: 54898581}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &54898583 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7072444061582351952, guid: 910177ec26b76c14996c2d53627a6def,
+    type: 3}
+  m_PrefabInstance: {fileID: 54898581}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &54898584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54898582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3dd22b0f965f1e4c9f1d11eda2ba86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idleClip: {fileID: 8300000, guid: 704d98cae25f8b54fa0b0bb63da1fbdd, type: 3}
+  walkClip: {fileID: 8300000, guid: 13c9ad2d3d12bd947a494d3ec260704c, type: 3}
+  runClip: {fileID: 8300000, guid: 7d88a1a6b44ab3a4f81415da9221d24f, type: 3}
+  patrolClip: {fileID: 8300000, guid: 13c9ad2d3d12bd947a494d3ec260704c, type: 3}
+  attackClip: {fileID: 8300000, guid: 8f60411a072a1f84996848062783b5e5, type: 3}
+  reloadClip: {fileID: 8300000, guid: c11477e054dfe1f4187b92cff4b766f5, type: 3}
+  dieClip: {fileID: 0}
+  bgmClip: {fileID: 8300000, guid: fe425519725ecc74f935551563c6d4ed, type: 3}
+  loopBGM: 1
+--- !u!114 &54898585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54898582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd6c7dd543c07544d92b0baf60b17b43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 54898583}
+  shotCtrl: {fileID: 797205121}
+  attackStateName: Attack
+  reloadStateName: Reload
+--- !u!114 &54898586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54898582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9df08cd36071b8342b5be1aecbd4cc0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1329104162}
+  patrolPoints:
+  - {fileID: 788968778}
+  - {fileID: 501088316}
+  detectRange: 10
+  attackRange: 7
+  returnRange: 20
+  viewAngle: 120
+  attackCooldown: 1
+  maxAmmo: 3
+  reloadTime: 2
+  detectionZone: {fileID: 560685811}
+  shotCtrl: {fileID: 797205121}
 --- !u!1001 &57292437
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4294,17 +4380,17 @@ PrefabInstance:
     - target: {fileID: 3525604386790356706, guid: 779451906d8dd614095ae97111671f00,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3713582153326055517, guid: 779451906d8dd614095ae97111671f00,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3713582153326055517, guid: 779451906d8dd614095ae97111671f00,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18339,7 +18425,7 @@ PrefabInstance:
     - target: {fileID: 301230551107954808, guid: 3e84382cc3999304a81e990594338239,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 301230551107954808, guid: 3e84382cc3999304a81e990594338239,
         type: 3}
