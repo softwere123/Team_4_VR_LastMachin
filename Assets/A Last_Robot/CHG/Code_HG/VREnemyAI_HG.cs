@@ -5,101 +5,112 @@ using System.Collections;
 public class VREnemyAI_HG : MonoBehaviour
 {
     [Header("타겟 및 거리")]
-    public Transform player; // 🎯 추적할 플레이어의 Transform
-    public Transform[] patrolPoints; // 🛣️ 순찰 지점 배열
-    public float detectRange = 15f; // 👁️ 플레이어를 감지할 거리
-    public float attackRange = 8f; // 🔫 공격을 시작할 거리
-    public float returnRange = 20f; // 🔁 추격을 포기하고 복귀할 거리
+    public Transform player; // 🎯 플레이어 Transform - 적이 추적할 대상
+    public Transform[] patrolPoints; // 🛣️ 순찰 경로 지점들
+    public float detectRange = 15f; // 👁️ 플레이어를 감지하는 범위
+    public float attackRange = 8f; // 🔫 공격이 가능한 거리
+
+    [HideInInspector]
+    public float returnRange = 20f; // 🔕 리턴 기능은 현재 사용하지 않음 (숨김 처리)
 
     [Header("시야각")]
-    [Range(0, 360)] public float viewAngle = 120f; // 🔍 플레이어를 감지할 수 있는 시야각
+    [Range(0, 360)] public float viewAngle = 120f; // 👀 적의 시야각도
 
     [Header("전투 설정")]
-    public float attackCooldown = 1f; // ⏱️ 공격 간 쿨타임
-    public int maxAmmo = 7; // 💣 최대 탄 수
+    public float attackCooldown = 1f; // ⏱️ 공격 간의 쿨다운 시간
+    public int maxAmmo = 7; // 💣 한 사이클 당 최대 탄 수
     public float reloadTime = 2f; // 🔄 재장전 시간
 
     [Header("감지 구역")]
-    public DetectionZone_HG detectionZone; // 📦 감지를 위한 트리거 박스
+    public DetectionZone_HG detectionZone; // 📦 플레이어가 들어왔는지 감지하는 트리거
 
     [Header("탄막 시스템")]
-    public SGShotCtrl shotCtrl; // 🔥 SGShotCtrl 컴포넌트 참조
+    public SGShotCtrl shotCtrl; // 🔥 총알 발사를 담당하는 SGShotCtrl
 
-    private NavMeshAgent agent; // 🧭 AI 이동 제어
-    private Animator animator; // 🎬 애니메이션 제어
+    private NavMeshAgent agent; // 🧭 AI 경로 탐색 제어
+    private Animator animator; // 🎞️ 애니메이션 제어
 
-    private int currentPatrolIndex = 0; // 📍 순찰 지점 인덱스
+    private int currentPatrolIndex = 0; // 순찰 경로 인덱스
     private bool isDead = false; // ☠️ 사망 여부
-    private int currentAmmo; // 📦 현재 남은 탄
-    private float lastAttackTime; // 🕓 마지막 공격 시각
-
-    private bool isReloading = false; // 🔁 현재 재장전 중인지 여부
+    private int currentAmmo; // 📦 현재 탄 수
+    private float lastAttackTime; // 🕓 마지막으로 공격한 시간 기록
+    private bool isReloading = false; // 🔄 재장전 중 여부
 
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>(); // 네비메시 에이전트 초기화
-        animator = GetComponent<Animator>(); // 애니메이터 컴포넌트 초기화
-        currentAmmo = maxAmmo; // 시작 시 탄약 풀
-        lastAttackTime = -999f; // 첫 공격 즉시 가능하게 설정
+        // 필요한 컴포넌트 가져오기
+        agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        currentAmmo = maxAmmo;
+        lastAttackTime = -999f;
 
-        agent.stoppingDistance = 0.01f; // 도착 후 거의 붙게 정지
+        agent.stoppingDistance = 0.01f; // 거의 붙을 때 정지
 
+        // SGShotCtrl 이벤트 연결
         if (shotCtrl != null)
         {
-            shotCtrl.onProjectileFired += OnProjectileFired; // SGShotCtrl에서 탄 발사 이벤트 구독
+            shotCtrl.onProjectileFired += OnProjectileFired;
             Debug.Log("✅ SGShotCtrl 이벤트 등록 완료");
         }
 
-        SetAnimState(true, false, false, false, /* false */ false, false); // 초기 상태를 순찰로 설정
+        // 시작 상태는 순찰로
+        SetAnimState(true, false, false, false, /* false */ false, false);
 
+        // 순찰 경로 시작 지점으로 이동
         if (patrolPoints.Length >= 2)
-            agent.SetDestination(patrolPoints[currentPatrolIndex].position); // 순찰 시작
+            agent.SetDestination(patrolPoints[currentPatrolIndex].position);
     }
 
     void Update()
     {
-        if (isDead || player == null) return; // 사망하거나 플레이어 없으면 동작 중지
+        if (isDead || player == null) return;
 
-        float distance = Vector3.Distance(transform.position, player.position); // 플레이어와의 거리 계산
-        Vector3 dirToPlayer = (player.position - transform.position).normalized; // 플레이어 방향
-        float angleToPlayer = Vector3.Angle(transform.forward, dirToPlayer); // 시야각 내인지 확인
-        bool inViewAngle = angleToPlayer <= viewAngle * 0.5f; // 시야각 범위 체크
-        bool inZone = detectionZone != null && detectionZone.playerInside; // DetectionZone 안에 있는지
+        // 플레이어 거리와 시야 확인
+        float distance = Vector3.Distance(transform.position, player.position);
+        Vector3 dirToPlayer = (player.position - transform.position).normalized;
+        float angleToPlayer = Vector3.Angle(transform.forward, dirToPlayer);
+        bool inViewAngle = angleToPlayer <= viewAngle * 0.5f;
+        bool inZone = detectionZone != null && detectionZone.playerInside;
 
-        bool playerDetected = (distance <= detectRange) && inViewAngle && inZone; // 세 조건 모두 만족 시 감지
+        // 모든 감지 조건 만족 시 플레이어 발견
+        bool playerDetected = (distance <= detectRange) && inViewAngle && inZone;
 
-        if (isReloading) return; // 재장전 중이면 아무것도 하지 않음
+        if (isReloading) return;
 
+        // 공격 거리일 때
         if (playerDetected && distance <= attackRange)
         {
-            agent.isStopped = true; // 이동 중지
-            agent.ResetPath(); // 현재 경로 초기화
+            agent.isStopped = true;
+            agent.ResetPath();
 
-            Vector3 direction = (player.position - transform.position).normalized; // 방향 재계산
-            Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z)); // 회전 대상
-            targetRotation *= Quaternion.Euler(0, 0, 0); // 약간 보정
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 7.5f * Time.deltaTime); // 부드럽게 회전
+            // 플레이어 방향으로 회전
+            Vector3 direction = (player.position - transform.position).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            targetRotation *= Quaternion.Euler(0, 0, 0);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 7.5f * Time.deltaTime);
 
-            SetAnimState(false, false, true, false, /* false */ false, false); // 공격 상태
-            HandleAttack(); // 공격 로직 실행
+            SetAnimState(false, false, true, false, /* false */ false, false);
+            HandleAttack();
         }
-        else if (playerDetected && distance > attackRange && distance <= returnRange)
+        // 감지되었지만 아직 공격 거리 아님
+        else if (playerDetected && distance > attackRange /* && distance <= returnRange */)
         {
-            agent.isStopped = false; // 이동 재시작
-            agent.SetDestination(player.position); // 플레이어 추적
-            SetAnimState(false, true, false, false, /* false */ false, false); // 추격 상태
+            agent.isStopped = false;
+            agent.SetDestination(player.position);
+            SetAnimState(false, true, false, false, /* false */ false, false);
         }
-        else if (!playerDetected || distance > returnRange)
+        // 감지되지 않음 → 순찰
+        else if (!playerDetected /* || distance > returnRange */)
         {
-            SetAnimState(true, false, false, false, /* false */ false, false); // 순찰 상태로
-            Patrol(); // 순찰 루틴 실행
+            SetAnimState(true, false, false, false, /* false */ false, false);
+            Patrol();
 
-            // ⛔ 리턴 기능 (추후 활성화 가능)
+            // 🔕 리턴 기능 비활성화
             /*
             if (!agent.hasPath)
             {
-                SetAnimState(false, false, false, false, true, false); // 리턴 상태
-                agent.SetDestination(returnPosition); // 복귀 위치 이동
+                SetAnimState(false, false, false, false, true, false);
+                agent.SetDestination(returnPosition);
             }
             */
         }
@@ -107,67 +118,72 @@ public class VREnemyAI_HG : MonoBehaviour
 
     void HandleAttack()
     {
+        // 쿨다운 + 탄약 체크
         if (Time.time - lastAttackTime >= attackCooldown && currentAmmo > 0)
         {
-            lastAttackTime = Time.time; // 공격 시간 갱신
+            lastAttackTime = Time.time;
             Debug.Log("🧠 공격 상태 유지 (탄 발사는 애니메이션에서)");
         }
     }
 
     void OnProjectileFired()
     {
-        currentAmmo--; // 탄약 차감
+        currentAmmo--;
         Debug.Log($"📦 탄약 차감됨 → 남은 탄: {currentAmmo}");
     }
 
     public void FireBullet()
     {
+        // 애니메이션 이벤트에서 호출됨
         if (currentAmmo > 0 && !isReloading)
         {
             Debug.Log("🔫 애니메이션 중에 발사!");
-            shotCtrl?.StartShot(); // 실제 발사 명령
+            shotCtrl?.StartShot(); // 실제 발사
         }
     }
 
     public void OnAttackAnimationEnd()
     {
+        // 탄약 없음 → 재장전
         if (currentAmmo <= 0 && !isReloading)
         {
             Debug.Log("🎯 애니메이션 종료 후 → 재장전 시작");
-            StartReload(); // 재장전 루틴 시작
+            StartReload();
         }
     }
 
     void StartReload()
     {
-        isReloading = true; // 재장전 상태 진입
-        SetAnimState(false, false, false, true, /* false */ false, false); // 재장전 애니메이션
-        StartCoroutine(ReloadRoutine()); // 재장전 처리 루틴 시작
+        isReloading = true;
+        SetAnimState(false, false, false, true, /* false */ false, false);
+        StartCoroutine(ReloadRoutine());
     }
 
     IEnumerator ReloadRoutine()
     {
         Debug.Log("🔁 장전 중...");
-        yield return new WaitForSeconds(reloadTime); // 재장전 시간 대기
+        yield return new WaitForSeconds(reloadTime);
 
-        currentAmmo = maxAmmo; // 탄약 충전
-        isReloading = false; // 재장전 종료
+        currentAmmo = maxAmmo;
+        isReloading = false;
 
         Debug.Log($"✅ 장전 완료 → 탄약 {currentAmmo} 발 복구");
-        SetAnimState(false, false, true, false, /* false */ false, false); // 다시 공격 상태
+        SetAnimState(false, false, true, false, /* false */ false, false);
     }
 
     void Patrol()
     {
-        if (patrolPoints.Length < 2) return; // 순찰 포인트 2개 미만이면 무시
+        if (patrolPoints.Length < 2) return;
 
+        // 순찰 포인트에 도착
         if (!agent.pathPending && agent.remainingDistance <= 0.5f && agent.velocity.sqrMagnitude < 0.05f)
         {
-            agent.ResetPath(); // 경로 초기화
-            currentPatrolIndex = currentPatrolIndex == 0 ? 1 : 0; // 왕복
-            agent.SetDestination(patrolPoints[currentPatrolIndex].position); // 다음 지점 이동
+            agent.ResetPath();
+            currentPatrolIndex = currentPatrolIndex == 0 ? 1 : 0; // 왕복 방식
+            agent.SetDestination(patrolPoints[currentPatrolIndex].position);
         }
 
+        // 순찰 중 회전 처리
         Vector3 toTarget = patrolPoints[currentPatrolIndex].position - transform.position;
         if (toTarget.sqrMagnitude > 0.1f)
         {
@@ -178,21 +194,23 @@ public class VREnemyAI_HG : MonoBehaviour
 
     void SetAnimState(bool patrol, bool chase, bool attack, bool reload, /* bool returning */ bool unused, bool dead)
     {
-        animator.SetBool("isPatrolling", patrol); // 순찰 상태
-        animator.SetBool("isChasing", chase); // 추격 상태
-        animator.SetBool("isAttacking", attack); // 공격 상태
-        animator.SetBool("isReloading", reload); // 재장전 상태
-        // animator.SetBool("isReturning", returning); // ⛔ 리턴 상태 (비활성화)
-        animator.SetBool("isDead", dead); // 사망 상태
+        animator.SetBool("isPatrolling", patrol);
+        animator.SetBool("isChasing", chase);
+        animator.SetBool("isAttacking", attack);
+        animator.SetBool("isReloading", reload);
+        // animator.SetBool("isReturning", returning); // 🔕 리턴 상태 비활성화
+        animator.SetBool("isDead", dead);
     }
 
     public void Die()
     {
-        isDead = true; // 사망 플래그
-        agent.isStopped = true; // 이동 정지
-        SetAnimState(false, false, false, false, /* false */ false, true); // 사망 애니메이션
+        isDead = true;
+        agent.isStopped = true;
+        SetAnimState(false, false, false, false, /* false */ false, true);
     }
 }
+
+
 
 
 
