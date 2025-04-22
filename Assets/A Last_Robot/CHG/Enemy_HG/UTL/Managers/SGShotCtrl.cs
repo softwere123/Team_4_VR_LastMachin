@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class SGShotCtrl : MonoBehaviour
 {
+    // 🔔 발사체가 실제 발사되었을 때 외부에서 호출할 수 있도록 이벤트 제공
     public System.Action onProjectileFired;
 
+    // 🔫 외부에서 발사를 시작/중지할 수 있는 속성 (setter 내부에서 로직 처리)
     public bool Shooting
     {
         get => _shooting;
@@ -19,8 +21,9 @@ public class SGShotCtrl : MonoBehaviour
         }
     }
 
-    public bool _shooting;
+    public bool _shooting; // 현재 발사 중인지 여부를 저장하는 내부 변수
 
+    // 💡 탄막 상태를 정의한 열거형
     public enum UpdateStep
     {
         StartDelay,
@@ -33,10 +36,11 @@ public class SGShotCtrl : MonoBehaviour
     [Serializable]
     public class ShotInfo
     {
-        public SGBaseShot shotObj;
-        public float afterDelay = 0.1f;
+        public SGBaseShot shotObj;      // 발사할 탄막 오브젝트
+        public float afterDelay = 0.1f; // 다음 탄막까지 대기 시간
     }
 
+    // 🔁 방향 및 설정 관련 옵션들
     public SGUtil.AXIS axisMove = SGUtil.AXIS.X_AND_Y;
     public bool inheritAngle = false;
     public bool startOnAwake = true;
@@ -45,14 +49,16 @@ public class SGShotCtrl : MonoBehaviour
     public float startOnEnableDelay = 1f;
     public bool loop = false;
 
-    public List<ShotInfo> shotList = new List<ShotInfo>();
+    public List<ShotInfo> shotList = new List<ShotInfo>(); // 여러 발사 정보를 리스트로 관리
 
+    // 🔄 내부 상태 관리용 변수들
     public UpdateStep updateStep;
     private int nowIndex;
     private float delayTimer;
 
     private bool isInitialized = false;
 
+    // 🟢 Start에서 초기 탄막 자동 실행 여부 확인
     private void Start()
     {
         if (startOnAwake)
@@ -66,6 +72,7 @@ public class SGShotCtrl : MonoBehaviour
         StartCoroutine(WaitForSingleton());
     }
 
+    // ✅ 싱글톤 매니저 초기화 기다리는 루틴
     private IEnumerator WaitForSingleton()
     {
         while (!isInitialized)
@@ -77,7 +84,7 @@ public class SGShotCtrl : MonoBehaviour
             yield return null;
         }
 
-        Managers.ShotManager.AddShot(this);
+        Managers.ShotManager.AddShot(this); // 매니저에 등록
 
         if (startOnEnable)
         {
@@ -91,18 +98,17 @@ public class SGShotCtrl : MonoBehaviour
 
         if (Managers.ShotManager != null)
         {
-            Managers.ShotManager.RemoveShot(this);
+            Managers.ShotManager.RemoveShot(this); // 파괴 시 매니저에서 제거
         }
     }
 
-    /// <summary>
-    /// ✅ 매 프레임 탄막 실행 루프
-    /// </summary>
+    // 🔁 프레임마다 탄막 갱신
     private void Update()
     {
-        UpdateShot(Time.deltaTime); // 🔁 탄막 로직 실행
+        UpdateShot(Time.deltaTime);
     }
 
+    // 🔄 탄막 실행 메인 로직
     public void UpdateShot(float deltaTime)
     {
         if (_shooting == false)
@@ -112,6 +118,7 @@ public class SGShotCtrl : MonoBehaviour
 
         ShotInfo nowShotInfo = shotList[nowIndex];
 
+        // ⏳ 1. 시작 지연 처리
         if (updateStep == UpdateStep.StartDelay)
         {
             if (delayTimer > 0f)
@@ -126,18 +133,20 @@ public class SGShotCtrl : MonoBehaviour
             }
         }
 
+        // 🔫 2. 실제 발사 처리
         if (updateStep == UpdateStep.StartShot)
         {
             if (nowShotInfo.shotObj != null)
             {
-                nowShotInfo.shotObj.SetShotCtrl(this); // ✅ SGBaseShot에 SGShotCtrl 연결
-                nowShotInfo.shotObj.Shot();            // 🔫 발사
+                nowShotInfo.shotObj.SetShotCtrl(this);
+                nowShotInfo.shotObj.Shot();
             }
 
             delayTimer = 0f;
             updateStep = UpdateStep.WaitDelay;
         }
 
+        // ⏱️ 3. 발사 후 딜레이
         if (updateStep == UpdateStep.WaitDelay)
         {
             if (nowShotInfo.afterDelay > 0 && nowShotInfo.afterDelay > delayTimer)
@@ -151,6 +160,7 @@ public class SGShotCtrl : MonoBehaviour
             }
         }
 
+        // 🔁 4. 다음 탄막 인덱스로
         if (updateStep == UpdateStep.UpdateIndex)
         {
             if (loop || nowIndex < shotList.Count - 1)
@@ -164,9 +174,10 @@ public class SGShotCtrl : MonoBehaviour
             }
         }
 
+        // 📌 재귀적 실행
         if (updateStep == UpdateStep.StartShot)
         {
-            UpdateShot(deltaTime); // 재귀 호출
+            UpdateShot(deltaTime);
         }
         else if (updateStep == UpdateStep.FinishShot)
         {
@@ -174,6 +185,9 @@ public class SGShotCtrl : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 🚀 발사 루틴을 시작
+    /// </summary>
     public void StartShotRoutine(float startDelay = 0f)
     {
         if (shotList == null || shotList.Count <= 0)
@@ -214,10 +228,22 @@ public class SGShotCtrl : MonoBehaviour
         nowIndex = 0;
     }
 
+    /// <summary>
+    /// 🛑 발사 중지
+    /// </summary>
     public void StopShot()
     {
         _shooting = false;
         updateStep = UpdateStep.FinishShot;
     }
+
+    /// <summary>
+    /// ✅ 외부에서 호출 가능한 단순 발사 시작 메서드 (추가된 부분)
+    /// </summary>
+    public void StartShot()
+    {
+        StartShotRoutine(); // 내부 루틴 실행
+    }
 }
+
 

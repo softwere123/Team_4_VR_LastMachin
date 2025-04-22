@@ -1960,6 +1960,13 @@ MonoBehaviour:
   maxAmmo: 7
   reloadTime: 2.5
   maxHealth: 100
+  patrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &5156907161214181762
 MonoBehaviour:
   m_ObjectHideFlags: 0
