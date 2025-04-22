@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5816093469591875323}
   - component: {fileID: -1869128034032986680}
   - component: {fileID: -1917027738777759909}
+  - component: {fileID: 2115018097351002093}
   m_Layer: 0
   m_Name: EnemyBullet
   m_TagString: Bullet
@@ -102,7 +103,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -122,6 +123,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _DeadTimer: 30
   Damage: 10
+  xrHand: {fileID: 0}
+  hand: {fileID: 0}
 --- !u!114 &-1869128034032986680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,8 +173,8 @@ MonoBehaviour:
   onGrab:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9120461121998230352}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+      - m_Target: {fileID: 5816093469591875323}
+        m_TargetAssemblyTypeName: SGProjectile, Assembly-CSharp
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
@@ -321,3 +324,30 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!54 &2115018097351002093
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9120461121998230352}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
