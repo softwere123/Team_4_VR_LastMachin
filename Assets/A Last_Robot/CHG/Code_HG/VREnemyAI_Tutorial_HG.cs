@@ -5,17 +5,20 @@ using UnityEngine;
 /// 🎯 튜토리얼 적 AI
 /// - 플레이어를 감지하면 사격
 /// - 탄약 소진 시 장전
-/// - 제자리에서 회전하며 공격
+/// - DetectionZone 안에 있어야 감지됨
 /// </summary>
 public class VREnemyAI_Tutorial_HG : MonoBehaviour
 {
     [Header("타겟 설정")]
-    public Transform player;       // 🎯 플레이어 타겟
+    public Transform player; // 🎯 플레이어 타겟
+
+    [Header("감지 시스템")]
+    public DetectionZone_HG detectionZone; // 📦 감지 박스 (트리거 영역)
 
     [Header("전투 설정")]
-    public float detectRange = 15f; // 감지 범위
-    public float attackRange = 8f;  // 공격 범위
-    public int maxAmmo = 7;         // 최대 탄약
+    public float detectRange = 15f; // 감지 거리
+    public float attackRange = 8f;  // 공격 거리
+    public int maxAmmo = 7;         // 최대 탄 수
     public float reloadTime = 2.5f; // 장전 시간
 
     private int currentAmmo;
@@ -37,7 +40,10 @@ public class VREnemyAI_Tutorial_HG : MonoBehaviour
 
         float distance = Vector3.Distance(transform.position, player.position);
 
-        if (distance <= detectRange)
+        // 👁️ 거리 + 감지존 안에 있는지 확인
+        bool playerDetected = distance <= detectRange && detectionZone != null && detectionZone.playerInside;
+
+        if (playerDetected)
         {
             // 플레이어 방향으로 회전
             Vector3 dir = (player.position - transform.position).normalized;

@@ -1777,7 +1777,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7072444061591351794
 Transform:
   m_ObjectHideFlags: 0
@@ -1811,7 +1811,7 @@ Animator:
   m_GameObject: {fileID: 7072444061591711186}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 860793eb3324391468f1c120a75ec049, type: 3}
-  m_Controller: {fileID: 9100000, guid: 6defa2fea7e9a934a8d2cafa30dc567a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 04d392a5ed521fa4eacddb1093165620, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1954,7 +1954,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   detectRange: 15
-  attackRange: 8
+  attackRange: 12
   maxAmmo: 7
   reloadTime: 2.5
 --- !u!114 &5156907161214181762
@@ -1988,9 +1988,12 @@ MonoBehaviour:
   idleClip: {fileID: 8300000, guid: 704d98cae25f8b54fa0b0bb63da1fbdd, type: 3}
   walkClip: {fileID: 8300000, guid: ceaa6c9077e544848ba22218ed72c560, type: 3}
   runClip: {fileID: 8300000, guid: 1243d6b0e01cd1a46a18782e5c1a32e4, type: 3}
+  patrolClip: {fileID: 0}
   attackClip: {fileID: 8300000, guid: 2375721b37e7ea746befb72503399fbe, type: 3}
   reloadClip: {fileID: 8300000, guid: c11477e054dfe1f4187b92cff4b766f5, type: 3}
   dieClip: {fileID: 0}
+  bgmClip: {fileID: 0}
+  loopBGM: 1
 --- !u!1 &7072444061591711188
 GameObject:
   m_ObjectHideFlags: 0
@@ -3197,6 +3200,11 @@ PrefabInstance:
         type: 3}
       propertyPath: axisMove
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
+        type: 3}
+      propertyPath: updateStep
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3306653494723447488, guid: 84efb1860f6922a44ae4a3f81f3bd86f,
         type: 3}
