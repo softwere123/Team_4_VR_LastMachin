@@ -1958,10 +1958,10 @@ MonoBehaviour:
   patrolPoints:
   - {fileID: 0}
   - {fileID: 0}
-  detectRange: 15
-  attackRange: 15
+  detectRange: 10
+  attackRange: 8
   returnRange: 20
-  viewAngle: 120
+  viewAngle: 90
   attackCooldown: 1
   maxAmmo: 3
   reloadTime: 2
