@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Bullet
   - Wood
+  - GameManager
   layers:
   - Default
   - TransparentFX
