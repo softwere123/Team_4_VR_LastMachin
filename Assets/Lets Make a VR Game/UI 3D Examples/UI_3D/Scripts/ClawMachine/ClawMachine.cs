@@ -1,5 +1,5 @@
 using System.Collections;
-using UnityEngine.XR.Interaction.Toolkit;
+
 
 namespace UnityEngine.XR.Content.Interaction
 {
@@ -17,7 +17,7 @@ namespace UnityEngine.XR.Content.Interaction
 
         [SerializeField]
         [Tooltip("The claw socket used to get the prizes")]
-        XRSocketInteractor m_ClawSocket;
+        UnityEngine.XR.Interaction.Toolkit.Interactors.XRSocketInteractor m_ClawSocket;
 
         [SerializeField]
         [Tooltip("The component used to apply a force on the prizes")]
