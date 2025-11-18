@@ -9,11 +9,11 @@ EditorBuildSettings:
     path: Assets/------A Last_Robot-------/A Last_Main/Scene/S2 PuzzleMain.unity
     guid: 465a1c79115b73f468819195587d0fee
   - enabled: 1
-    path: Assets/------A Last_Robot-------/A Last_Main/Scene/S3 PuzzleMain.unity
-    guid: eb89ded0a1d8cd54c89d14b51d49bb47
-  - enabled: 1
     path: Assets/------A Last_Robot-------/A Last_Main/Scene/S1 PuzzleMain.unity
     guid: d8e75cf8d66e9904e833f0ca52e222d0
+  - enabled: 1
+    path: Assets/------A Last_Robot-------/A Last_Main/Scene/S3 PuzzleMain.unity
+    guid: eb89ded0a1d8cd54c89d14b51d49bb47
   - enabled: 1
     path: Assets/------A Last_Robot-------/A Last_Main/Scene/S1 BattleMain.unity
     guid: 71b335e0e8951f14ca8819012e6ad5e3
