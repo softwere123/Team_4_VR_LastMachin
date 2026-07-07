@@ -16,10 +16,10 @@ GameObject:
   - component: {fileID: -1917027738777759909}
   - component: {fileID: 2115018097351002093}
   - component: {fileID: 9144062238908405698}
-  - component: {fileID: 1955310359512354757}
   - component: {fileID: 321817432324438662}
+  - component: {fileID: -7184212550197152800}
   m_Layer: 0
-  m_Name: EnemyBullet 2
+  m_Name: PlayerBullet
   m_TagString: Wood
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -159,7 +159,7 @@ MonoBehaviour:
   onGrab:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1955310359512354757}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: EnemyBullet, Assembly-CSharp
         m_MethodName: DestroyAfterDelay
         m_Mode: 1
@@ -375,18 +375,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _DeadTimer: 30
   Damage: 10
---- !u!114 &1955310359512354757
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9120461121998230352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f6d0329980fd794d914b548ff988848, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &321817432324438662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,3 +398,16 @@ MonoBehaviour:
   OnSmash:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-7184212550197152800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9120461121998230352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22ab703f336b2084390a340e8925e31b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPoint: 10
