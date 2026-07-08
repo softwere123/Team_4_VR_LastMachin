@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 9144062238908405698}
   - component: {fileID: 321817432324438662}
   - component: {fileID: -7184212550197152800}
+  - component: {fileID: 4934687594016}
   m_Layer: 0
   m_Name: PlayerBullet
   m_TagString: Wood
@@ -105,7 +106,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -408,6 +409,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22ab703f336b2084390a340e8925e31b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   attackPoint: 10
+--- !u!114 &4934687594016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9120461121998230352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df55df3ce06f4171e3476fbc60917320, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  damage: 10
