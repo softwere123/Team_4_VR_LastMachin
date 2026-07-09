@@ -123,7 +123,18 @@ public class SGProjectile : MonoBehaviour
 
         if (this.axisMove == SGUtil.AXIS.X_AND_Z)
         {
-            transformCache.SetEulerAnglesY(baseAngle - this.angle);
+            if (inheritAngle && this.parentBaseShot.lockOnShot == false)
+            {
+                // 기존엔 SetEulerAnglesY로 좌우(Y) 각도만 물려받고 위아래(피치, X)는 항상 0으로
+                // 고정됐었다 - 그래서 총구를 아래로 겨눠도 탄환은 항상 정면 수평으로만 나갔다.
+                // 슈터의 회전을 피치까지 그대로 물려받아 조준한 방향으로 정확히 발사되게 한다.
+                // (angle은 다중 발사 스프레드용 - 슈터 기준 좌우로만 추가 회전)
+                transformCache.rotation = this.parentBaseShot.shotCtrl.transform.rotation * Quaternion.Euler(0f, -this.angle, 0f);
+            }
+            else
+            {
+                transformCache.SetEulerAnglesY(baseAngle - this.angle);
+            }
         }
         else
         {
@@ -276,31 +287,4 @@ public class SGProjectile : MonoBehaviour
             SGObjectPool.Instance.ReleaseProjectile(this);
         }
     }
-
-    /// <summary>
-    /// 플레이어와 충돌 시 즉시 총알 반납
-    /// </summary>
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("🎯 총알이 플레이어에 충돌했습니다");
-
-            // 부모까지 포함해서 PlayerHealth_HG 찾기
-            PlayerHealth_HG playerHealth = other.GetComponentInParent<PlayerHealth_HG>();
-            if (playerHealth != null)
-            {
-                Debug.Log("✅ PlayerHealth 컴포넌트를 찾았습니다");
-                playerHealth.TakeDamage(10); // 원하는 데미지로 조절
-            }
-            else
-            {
-                Debug.LogWarning("❌ PlayerHealth_HG 컴포넌트를 찾지 못했습니다");
-            }
-
-            SGObjectPool.Instance.ReleaseProjectile(this);
-        }
-    }
-
-
 }

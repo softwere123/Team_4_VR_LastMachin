@@ -16,11 +16,10 @@ public class BulletDestroyed : MonoBehaviour
     public void PlayerDamaged(int Damage)
     {
         PlayerHP -= Damage;
+        PlayerHP = Mathf.Max(PlayerHP, 0);
 
-        if (PlayerHP < 0)
+        if (PlayerHP <= 0)
         {
-            Debug.Log("실행2");
-
             Die();
         }
     }

@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 2115018097351002093}
   - component: {fileID: 9144062238908405698}
   - component: {fileID: 321817432324438662}
-  - component: {fileID: -7184212550197152800}
   - component: {fileID: 4934687594016}
   m_Layer: 0
   m_Name: PlayerBullet
@@ -399,19 +398,6 @@ MonoBehaviour:
   OnSmash:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &-7184212550197152800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9120461121998230352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22ab703f336b2084390a340e8925e31b, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  attackPoint: 10
 --- !u!114 &4934687594016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -422,6 +408,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df55df3ce06f4171e3476fbc60917320, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  damage: 10
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 80

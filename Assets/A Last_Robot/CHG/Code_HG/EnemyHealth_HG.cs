@@ -14,6 +14,10 @@ public class EnemyHealth_HG : MonoBehaviour
     private NavMeshAgent agent;          // 이동 에이전트
     private bool isDead = false;         // 사망 여부
 
+    [Header("💰 처치 시 코인 드롭")]
+    public GameObject coinPrefab;        // 비워두면 Resources/Coin 프리팹을 자동으로 찾아 씀
+    public int coinDropCount = 1;
+
     void Start()
     {
         currentHealth = maxHealth;       // 시작 시 풀 체력
@@ -60,6 +64,13 @@ public class EnemyHealth_HG : MonoBehaviour
         anim.SetBool("Reload", false);
         anim.SetBool("SeePlayer", false);
 
+        // 애니메이터 상태 전이와 무관하게 발사를 즉시 중단 (죽은 뒤에도 총알이 나가는 것 방지)
+        SGShotCtrl shotCtrl = GetComponentInChildren<SGShotCtrl>();
+        if (shotCtrl != null)
+        {
+            shotCtrl.Shooting = false;
+        }
+
         // 이 스크립트 또는 AI 스크립트 비활성화 (선택)
         // this.enabled = false;
     }
@@ -69,8 +80,20 @@ public class EnemyHealth_HG : MonoBehaviour
     /// </summary>
     public void OnDieAnimationEnd()
     {
+        DropCoins();
+
         // 죽음 애니메이션 끝나면 오브젝트 삭제
         Destroy(gameObject); // 또는 SetActive(false) 등 선택 가능
+    }
+
+    private void DropCoins()
+    {
+        GameObject prefab = coinPrefab != null ? coinPrefab : Resources.Load<GameObject>("Coin");
+        if (prefab == null)
+            return;
+
+        for (int i = 0; i < coinDropCount; i++)
+            Instantiate(prefab, transform.position + Vector3.up * 0.5f, Quaternion.identity);
     }
 
     /// <summary>

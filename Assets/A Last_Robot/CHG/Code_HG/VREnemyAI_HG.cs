@@ -79,10 +79,13 @@ public class VREnemyAI_HG : MonoBehaviour
             agent.isStopped = true; // 이동 멈춤
             agent.ResetPath(); // 경로 초기화
 
-            // 플레이어 방향으로 회전
+            // 플레이어 방향으로 회전 (몸통은 걷는 모습이 어색하지 않게 좌우로만 회전)
             Vector3 direction = (player.position - transform.position).normalized;
             Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 7.5f * Time.deltaTime);
+
+            // 총구는 몸통과 별개로 플레이어를 위아래까지 정확히 겨냥 (공중에 뜬 플레이어도 맞힐 수 있도록)
+            AimShotCtrlAtPlayer();
 
             SetAnimState(false, false, true, false, false, false); // 공격 애니메이션 상태로
             HandleAttack(); // 실제 공격 로직 실행
@@ -106,6 +109,22 @@ public class VREnemyAI_HG : MonoBehaviour
 
             Patrol(); // 순찰 로직 실행
         }
+    }
+
+    // 총구(shotCtrl)를 몸통 회전과 별개로 플레이어를 향해 위아래까지 겨냥한다.
+    // SGProjectile이 발사 순간 이 회전을 그대로 물려받아 탄환 방향을 결정하므로,
+    // 여기서 정확히 겨냥해둬야 플레이어가 공중에 있어도 맞힐 수 있다.
+    void AimShotCtrlAtPlayer()
+    {
+        if (shotCtrl == null)
+            return;
+
+        Vector3 aimDirection = (player.position - shotCtrl.transform.position).normalized;
+        if (aimDirection.sqrMagnitude < 0.0001f)
+            return;
+
+        Quaternion aimRotation = Quaternion.LookRotation(aimDirection);
+        shotCtrl.transform.rotation = Quaternion.Slerp(shotCtrl.transform.rotation, aimRotation, 10f * Time.deltaTime);
     }
 
     // 공격 처리: 탄 수가 남았고 쿨타임이 지났다면 공격

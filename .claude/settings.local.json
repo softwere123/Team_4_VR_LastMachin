@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(update-config)",
+      "PowerShell(claude *)",
+      "PowerShell(git *)",
+      "Bash(git *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(git checkout *)",
+      "mcp__ide__getDiagnostics",
+      "Read(//tmp/**)",
+      "Read(//mnt/**)",
+      "Read(//d/Project/unity-claude-template/**)",
+      "Read(//d/Project/unity-claude-template/.claude/**)"
+    ]
+  }
+}

@@ -22,7 +22,10 @@ public class HeartSysthem : MonoBehaviour
 
     public void Update()
     {
-        targetImage.fillAmount = BD.PlayerHP / 1000.0f;
+        if (targetImage == null || BD == null || BD.PlayerMax <= 0)
+            return;
+
+        targetImage.fillAmount = (float)BD.PlayerHP / BD.PlayerMax;
     }
 
 }

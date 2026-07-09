@@ -18,8 +18,6 @@ GameObject:
   - component: {fileID: 9144062238908405698}
   - component: {fileID: 1955310359512354757}
   - component: {fileID: 321817432324438662}
-  - component: {fileID: -1176956950721630992}
-  - component: {fileID: -7645302894213446497}
   - component: {fileID: 4954515822584}
   - component: {fileID: 5212371598038}
   m_Layer: 0
@@ -414,33 +412,6 @@ MonoBehaviour:
   OnSmash:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &-1176956950721630992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9120461121998230352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 578a5abf029dbe944b6d9f503a09a51d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerHP: 100
-  PlayerMax: 100
---- !u!114 &-7645302894213446497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9120461121998230352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22ab703f336b2084390a340e8925e31b, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  attackPoint: 40
 --- !u!114 &4954515822584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,9 +422,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0de3b49915f59093b976c4189eadc8a1, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  maxHealth: 100
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
 --- !u!114 &5212371598038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,6 +435,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b33e4b35acb8973f93b2375b6bd8a8c0, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  damage: 40
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 80

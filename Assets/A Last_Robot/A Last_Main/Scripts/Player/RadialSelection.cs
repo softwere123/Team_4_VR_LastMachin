@@ -32,6 +32,8 @@ public class RadialSelection : MonoBehaviour
 
     private List<GameObject> spawnedParts = new();  // 생성된 파트 저장용 리스트
     private int currentSelectedRadialPart = 0;      // 현재 선택된 파트 인덱스
+    private bool isOpen = false;                    // 메뉴가 열려서 판정 중인지 (버튼을 처음 누른 프레임만 구분하기 위함)
+    private Transform radialPartCanvasOriginalParent; // 원래 부모(보통 손) - 닫을 때 복원용
 
     public AudioSource clickSound;             // 클릭 사운드 소스
 
@@ -51,13 +53,17 @@ public class RadialSelection : MonoBehaviour
 
         if (handController.ButtonPressed(spawnButton))
         {
-            SpawnedRadoalPart();   // 버튼을 누르면 UI 생성
-            GetSelectedRadiaPart(); // 버튼을 누르고 있는 동안 파트 선택 감지
+            if (!isOpen)
+            {
+                SpawnedRadoalPart(); // 버튼을 처음 누른 프레임에만 캔버스 위치/방향을 고정하고 UI 생성
+                isOpen = true;
+            }
+            GetSelectedRadiaPart(); // 누르고 있는 동안은 매 프레임 선택 판정만 갱신
         }
-
-        if (!handController.ButtonPressed(spawnButton))
+        else if (isOpen)
         {
             HideAndTriggerSelected(); // 버튼에서 손을 뗐을 때 선택 확정
+            isOpen = false;
         }
     }
 
@@ -68,21 +74,26 @@ public class RadialSelection : MonoBehaviour
     {
         OnPartSelected.Invoke(currentSelectedRadialPart);
         radialPartCanvas.gameObject.SetActive(false);
+
+        // 다음에 열 때 다시 손을 따라오도록 원래 부모(손)로 복원
+        if (radialPartCanvasOriginalParent != null)
+            radialPartCanvas.SetParent(radialPartCanvasOriginalParent, true);
     }
 
     /// <summary>
-    /// 손의 위치를 기준으로 현재 선택된 파트를 계산하고 강조 표시합니다.
+    /// 손의 각도(회전)를 기준으로 현재 선택된 파트를 계산하고 강조 표시합니다.
+    /// 캔버스 평면은 SpawnedRadoalPart에서 버튼을 처음 눌렀을 때 한 번만 고정되므로,
+    /// 그 이후에는 손이 그 평면 위에서 얼마나 돌아갔는지(handTransform.up)로 판정한다.
+    /// (예전엔 handTransform.position - radialPartCanvas.position로 계산했는데, 캔버스가
+    ///  매 프레임 손 위치로 재배치돼서 이 벡터가 항상 0에 가까워 판정이 사실상 불가능했다.)
     /// </summary>
     public void GetSelectedRadiaPart()
     {
-        Vector3 centerToHand = handTransform.position - radialPartCanvas.position;
-        Vector3 centerToHandProjected = Vector3.ProjectOnPlane(centerToHand, radialPartCanvas.forward);
+        Vector3 handAngleProjected = Vector3.ProjectOnPlane(handTransform.up, radialPartCanvas.forward);
 
-        float angle = Vector3.SignedAngle(radialPartCanvas.up, centerToHandProjected, -radialPartCanvas.forward);
+        float angle = Vector3.SignedAngle(radialPartCanvas.up, handAngleProjected, -radialPartCanvas.forward);
         if (angle < 0)
             angle += 360;
-
-        Debug.Log("ANGLE: " + angle);
 
         currentSelectedRadialPart = (int)(angle * numberOfRadialPart / 360f);
 
@@ -109,6 +120,13 @@ public class RadialSelection : MonoBehaviour
     public void SpawnedRadoalPart()
     {
         radialPartCanvas.gameObject.SetActive(true);
+
+        // radialPartCanvas는 원래 손(handTransform)의 자식이라, 부모를 유지한 채로는
+        // 손이 돌 때마다 캔버스도 같이 돌아버려서 "고정된 판(radius)" 기준 각도 판정이 불가능하다.
+        // 메뉴가 열려있는 동안만 부모에서 떼어내 월드 공간에 고정한다.
+        radialPartCanvasOriginalParent = radialPartCanvas.parent;
+        radialPartCanvas.SetParent(null, true);
+
         radialPartCanvas.position = handTransform.position;
         radialPartCanvas.forward = handTransform.forward;
 
